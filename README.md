@@ -1,34 +1,63 @@
-# oeis-search
-This is a script to perform complex searches on the OEIS database. When run, it will prompt you to enter a search (see the Syntax section below), and will display any sequences that match the search (capped at 10 by default, but this can be altered in the code easily). 
-
-# Instructions
-
-* Download each of the two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) at the OEIS.
-* Decompress the files, which should have default filenames of `names.txt` and `stripped.txt`.
-* Put these two files in the same folder as the `oeis.py` file.
-* Run `oeis.py`, at which point you will be prompted to enter a search. 
-
-# Syntax
-
-Some progressively more complicated searches, and the conditions they impose on a sequence: 
-
-* `1, 2, 3, 4`: Sequence must start with those four terms in that order.
-* `0?, 1, 2, 3, 4`: Sequence must start with either `0, 1, 2, 3, 4` or `1, 2, 3, 4` (i.e., the 0 is optional).
-* `1, 3, 5, 7|8, 10`: Fourth term is either 7 or 8 (along with the other specified terms).
-* `even, even, odd, prime`: First term is even, second term is even, third term is odd, fourth term is prime. 
-* `1, 2, 3, (4 | prime)`: Fourth term is either 4 or a prime.
-* `1, 1, 2, 5, 10-15, >, >=,`: Fifth term is between 10 and 15 inclusive, the sixth term is strictly greater than the fifth, and the seventh term is greater than or equal to the sixth. 
-* `2, 4, 2, prime*`: All terms after the third term are prime.
-* `3%4, 5%7, (3%5 & <=)*`: First term is congruent to 3 mod 4, second term is congruent to 5 mod 7, all subsequent terms are congruent to 3 mod 5 and less than or equal to the previous term.
-* `3*, 5, 7*`: Sequence consists of some nonnegative number of 3s, followed by a 5, followed by some nonnegative number of 7s. 
-* `*, 10, 3, 4`: Sequence contains the terms 10, 3, 4 in order consecutively, but not necessarily at the start. 
-* `*, 10, *, 3, *, 4`: Sequence contains the terms 10, 3, 4 in order, but not necessarily consecutively.
-* `1, 3, 8, _, 11`: There is a fourth term between 8 and 11, but it could be anything.
-* `1, 3, 8, (!=3)?, 11`: There might or might not be a term between 8 and 11, but if there is, it isn't 3.
-* `_, (!prime & >1)*`: All terms after the first are composite.
-
-The parser supports nested parentheses, if you want to use more complex logic.
-
-This syntax allows for computationally costly queries (things with a lot of question marks especially), so some searches may take a while to complete, but for most normal use cases, a search should terminate in under 10 seconds at most, and usually within a second. The `prime` keyword defaults to the Miller-Rabin probabilistic primality test for inputs over 100 million.
+# OEIS Search Engine
+OEIS Search Engine is a program to perform search queries on the OEIS Database (The script is still under development and testing)
 
 
+
+# Search Queries
+### Simple Search Queries
+###### Order
+* `1, 2, 3, 4`: Sequence contains these four terms without considering order. 
+* `1, 2, 3, 4`: Sequence contains these four terms in the same order anywhere in the sequence.
+###### Question Mark
+* `1, 5, ?1, 13, 20`: The third term could be any number (The question mark indicates any possible number).
+* `1, 5, ?2, 13, 20`: The third term and the fourth one could be any number (2 means two terms).
+* `1, 5, ?*, 13, 20`: Any possible set of numbers between the two sequences [1, 5] and [13, 20].
+* `1, 5, ?*, 13, 20, ?3, 60, 70`: Any possible set of numbers between the two sequences [1, 5] and [13, 20], and three numbers between [13, 20] and [60, 70].
+###### Range 
+* `1, 5, ?1, 13, 20--23`: The third term could be any number, the fifth is between 20 and 23.
+* `1--4, 5, ?1, 13, 20--30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
+###### The script will search anywhere in the sequence and not from the beginning. Other techniques could be added upon request.
+### Advanced Search Queries
+1. Shift The Sequence with Constant and Search
+2. Scale The Sequence with Constant and Search
+3. Shift The Sequence with (N, N+1, N+2 ...) and Search
+4. Scale The Sequence with (N, N+1, N+2 ...) and Search
+5. Scale and Shift The Sequence with Constant and Search
+6. Scale and Shift The Sequence with (N, N+1, N+2 ...) and Search
+7. Search About Differences of Adjacent Terms 
+8. Search About Summation of Adjacent Terms 
+9. Search About Product of Adjacent Terms 
+10. Shift with Primes and Search
+11. Scale with Primes and Search
+12. Search About Similar Sequence
+13. Check if the Sequence is The Summation of Two Sequences (Too Much Time - Need Enhancement)
+14. Check if The Sequence is The Product of Two Sequences (Too Much Time - Need Enhancement)
+15. Search About Cumulative Sums
+16. Search About Cumulative Products 
+17. Check if The Input is a Difference of a Sequence in The Database
+18. Check if The Input is a Sum of Adjacent Terms of a Sequence in The Database
+19. Check if The Input is a Product of Adjacent Terms of a Sequence in The Database
+20. Check if The Input is a Cumulative Sum of a Sequence in The Database
+21. Check if The Input is a Cumulative Product of a Sequence in The Database
+22. Design your own operation ... (To be added)
+
+
+
+# Notes
+## Database Update
+To update the database:
+1. Download two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
+2. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
+3. Move these two files to the `data` directory.
+4. Run `oeis.py` script and enjoy!
+## TODO 
+- [ ] Add More Options in Simple Search Queries (Prime, Odd, Even, Mod, ORing, ANDing)
+- [ ] Support Parenthesis
+- [ ] Intelligent Search Operation
+- [ ] Operation Design 
+- [ ] Speed Enhancement
+- [ ] Change The Functions Structure and Add Testing Unit
+- [ ] Input Validation 
+- [ ] Sequence Input Enhancement 
+
+For Suggestions ... ("mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.] jo")

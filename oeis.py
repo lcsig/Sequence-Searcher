@@ -1,341 +1,222 @@
-import json
-import codecs
-import types
-import sys
-import math
-import random
+#!/bin/env python
 
-def sieve(n):
-    """
-    Taken from
-    https://stackoverflow.com/questions/16004407/
-    a-fast-prime-number-sieve-in-python
-    """
-    sz = n//2
-    s = [1]*sz
-    limit = int(n**0.5)
-    for i in range(1,limit):
-        if s[i]:
-            val = 2*i+1
-            tmp = ((sz-1) - i)//val 
-            s[i+val::val] = [0]*tmp
-    return [2] + [i*2+1 for i, v in enumerate(s) if v and i>0]
+import modules.search_engine as eng
+import modules.engine1 as eng1
+import modules.engine2 as eng2
+import modules.engine3 as eng3
+import modules.engine4 as eng4
+import modules.engine5 as eng5
 
-primes=sieve(10000)
+import modules.seq as utils
 
-def modpow(a,e,n):
-    """Returns a^e (mod n).
-    More efficient for large values than directly computing."""
-    if(n<1):
-        return -1
-    b=bin(e)[2:]
-    prod=1
-    current=a
-    for i in range(len(b)):
-        if(b[-i-1]=='1'):
-            prod *= current
-            prod %= n
-        current *= current
-        current %= n
-    return prod
-
-initialCertainty=1 #Value to get approximation for Bayesian probability a
-#number given by Miller-Rabin is prime
-for p in primes:
-        initialCertainty*=1+1/p
-def v(n,d):
-    """Maximum e such that d^e divides n."""
-    if n<1 or d<2:
-        return -1
-    count=0
-    while n%d==0:
-        n//=d
-        count+=1
-    return count
-def millerRabin(n,prob=-1,checked=-1):
-    global initialCertainty
-    """Probabilistic primality test. Defaults to 99.999% Bayesian expectation
-    with priors given by PNT but can be set higher with prob.
-    You may include an optional array of primes which are known
-    not to divide the integer (defaults to the primes <10000
-    for the sake of the standard prime)."""
-    if prob==-1:
-        prob=0.99999
-    if checked != -1:
-        initialCertainty=1
-        for p in checked:
-            initialCertainty*=1+1/p
-    desired=1/(1-prob)
-    certainty=1/math.log(n)
-    certainty/=1-certainty
-    certainty*=initialCertainty
-    
-    s=v(n-1,2)
-    d=(n-1)//2**s
-    count=0
-    while certainty<desired or count<10:
-        a=random.randint(1,n-1)
-        k=modpow(a,d,n)
-        if k != 1:
-            r=0
-            while k%n!=n-1 and r<s:
-                k=(k**2)%n
-                r+=1
-            if r==s:
-                return False
-        certainty*=4
-        count+=1
-    return True
-def prime(n,prob=-1):
-    """Deterministic up to 100,000,000,
-    uses Miller-Rabin afterwards to Bayesian probability of at least prob.
-    Default value set to 99.999%.
-    """
-    if(n<2):
-        return False
-    if(n==2):
-        return True
-    for p in primes:
-        if (n%p==0):
-            return False
-        elif (p*p>n):
-            return True
-    return millerRabin(n,prob)
+_MAX_SHIFT_VALUE_N_TO_N = "[-] Maximum constant value (Values from -constant to +constant will be applied): "
+_MAX_N_VALUE_N_TO_N = "[-] Maximum N value (Values from -N to N will be applied): "
+########################################################################################################################
+_MAX_LEVEL_VALUE = "[-] Enter the maximum level (Levels from 1 to the maximum level will be applied): "
+_PRIME_START_POINT = "[-] The starting point of primes sequence: "
+_PRIME_END_POINT = "[-] The ending point of primes sequence: "
+_TOLERANCE_VALUE = "[-] Tolerance Value (Each term will have a tolerance of +- the entered value): "
+########################################################################################################################
+_YOUR_CHOICE = "[-] Your choice: "
+_YOUR_SEQ = "[-] Enter your sequence (comma seperated): "
+########################################################################################################################
+_NO_PATTERN = "[!] The sequence should not contain anything but numbers!"
+_ONE_NUMBER = "[!] The sequence should contain one number at least!"
+_NOT_FOUND = "[!] Could not find any results!"
 
 
-#end auxiliary functions
-
-names=['']+codecs.open("names.txt",encoding='utf-8').read().split('\n')[4:]
-
-A=open("stripped.txt").read().split('\n')
-def qint(l):
-    nl=[]
-    for i in range(1,len(l)):
-        if l[i]=='':
-            return nl
-        else:
-            nl+=[int(l[i])]
-    return nl
-A=[[]]+[qint(e.split(',')) for e in A[4:]]
-#A is now a list of sequences, with A[i] the terms of sequence i (and A{0] the empty list)
-
-def paren_split(s):
-    bits=[]
-    depth = 0
-    current=''
-    for c in s:
-        if c in '([{':
-            if depth==0:
-                if len(current.strip())>0: #don't count spacing between parens
-                    bits.append([current,0])
-                current=''
-            else:
-                current+=c
-            depth+=1
-        elif c in '}])':
-            depth-=1
-            if depth<=0:
-                if len(current.strip())>0: #don't count spacing between parens
-                    bits.append([current,1])
-                current=''
-            else:
-                current+=c
-        else:
-            current+=c
-    if len(current.strip())>0: #don't count spacing between parens
-        bits.append([current,int(depth>0)])
-    return bits
-
-def tparse(s,x,l,p):
-    #parse a final search term (no * or ?), given a previous term in the sequence
-    #x = current a-term
-    #l = list of functions
-    #p = previous term
-    if isinstance(s, types.FunctionType):
-        return s(x)
-    try:
-        v=int(s)
-        return x==v
-    except ValueError:
-        s = s.strip() #remove any extraneous spaces
-        if s=='_' or s=='': #empty string means that "*" parses as "_*"
-            #this comes first, so all further clauses 
-            #can assume s has at least one character
-            return True
-        elif '(' in s or '[' in s: #evaluate parentheticals
-            paren_clauses = paren_split(s)
-            new_s = ''
-            for clause, is_paren in paren_clauses:
-                if is_paren: #evaluate the stuff in the parenthetical first
-                    new_s+=str(tparse(clause,x,l,p)) #either 'True' or 'False'
-                else: #don't change this
-                    new_s+=clause
-            return tparse(new_s,x,l,p)
-        
-        elif '|' in s: #logical OR of several options
-            #lowest precedence, so outermost split
-            qs=s.split('|')
-            for q in qs:
-                #ignore q='' so that || doesn't mess things up
-                if q!='' and tparse(q,x,l,p):
-                    return True
-            return False
-        elif '&' in s: #AND takes precedence over OR
-            qs=s.split('&')
-            for q in qs:
-                #ok if q='' because we'll just AND it with true
-                if not tparse(q,x,l,p):
-                    return False
-            return True
-        elif s[0]=='!': #negation has the highest precedence, so comes last
-            return not tparse(s[1:],x,l,p)
-        elif s.lower() == 'true':
-            return True
-        elif s.lower() == 'false':
-            return False
-        elif s.lower() == 'even':
-            return (x%2==0)
-        elif s.lower() == 'odd':
-            return x%2==1
-        elif s.lower() == 'prime':
-            return prime(x) #note this is a probabilistic test for large primes
-        elif '-' in s[1:]: #range, e.g. "1 - 3"
-            #if the lower end is a negative number, s[0] might be '-'
-            #so we restrict to the 
-            i=s[1:].index('-')+1 
-            a=int(s[:i]) #first number
-            b=int(s[i+1:]) #second number
-            return min(a,b)<=x<=max(a,b)
-        elif '%' in s: #e.g. "3%4" means 3 mod 4 ("%4" defaults to 0 mod 4)
-            i=s.index('%')
-            try:
-                a=int(s[:i])
-            except ValueError:
-                a==0
-            b=int(s[i+1:])
-            return x%b == a%b
-        elif s == '<' or s=='-':
-            return x<p
-        elif s == '<=':
-            return x<=p
-        elif s == '>' or s=='+':
-            return x>p
-        elif s == '>=':
-            return x>=p
-        elif s == '=':
-            return x==p
-        elif s[0] == '=': #e.g. "=2"
-            return x==int(s[1:])
-        elif s[0] in ['<','>']:
-            if s[0]=='<':
-                if s[1]=='=':
-                    return (x<=int(s[2:]))
-                else:
-                    return (x<int(s[1:]))
-            else:
-                if s[1]=='=':
-                    return (x>=int(s[2:]))
-                else:
-                    return (x>int(s[1:]))
-        elif s[0] == 'f': #referring to a function
-            try:
-                i=int(s[1:])
-                return l[i-1](x)
-            except ValueError:
-                print("Unrecognized f-index:",s)
-        else:
-            print("Unrecognized final term:",s)
-            print(0/0)
-    
-def parse(s,a,l=[],p=0,verbose=False,t=0): #Does sequence a satisfy search s?
-    if verbose:
-        print('  '*t+str(s),a,p)
-    if (a==[] and s==[]) or (a==[] and len(s)==1 and s[0][-1]=='*'): #run out of terms and queries
-                                                                     #or final query is a wildcard
-        if verbose:
-            print('  '*t+"returning 2")
-        return 2 #our "really a match" return value
-    elif s==[]: #more terms, but no more queries
-        if verbose:
-            print('  '*t+"returning 0")
-        return 0
-    elif a==[]: #if the sequence were extended, it could match
-        if verbose:
-            print('  '*t+"returning 1")
-        return 1 #only case when this is returned
-    c = s[0] #current search term
-    ax = a[0] #current focus term
-    if type(c)==str and c[-1]=='*':
-        absent = parse(s[1:],a,l,p,verbose,t+1) #no more * terms
-        if absent==2: #save time
-            return absent
-        works = tparse(c[:-1],ax,l,p) #does the next term satisfy the asterisk condition?
-        if works: #we can run the same s-terms with the next bit of the list
-            present = parse(s,a[1:],l,ax,verbose,t+1)
-        else:
-            present=0
-        return max(present, absent) #best return type of the two of these
-    elif type(c)==str and c[-1]=='?': #this term may not exist
-        absent = parse(s[1:],a,l,p,verbose,t+1) #if there's no such term, previous is same (and a doesn't shrink)
-        if absent==2: #save time
-            return absent
-        works = tparse(c[:-1],ax,l,p) #does the next term satisfy the question mark condition?
-        if works:
-            present = parse(s[1:],a[1:],l,ax,verbose,t+1) #note that we now have the previous term as the current term
-        else:
-            present = False #if we can't take a question mark term, then this fails
-        
-        return max(present, absent) #either way works, take the best one
-    else:
-        works = tparse(c,ax,l,p) #does the current term satisfy the search?
-        if works:
-            return parse(s[1:],a[1:],l,ax,verbose,t+1)
-        else:
-            if verbose:
-                print('  '*t+"returning 0")
-            return 0
+def echo_main():
+    print("[+] 1. Search about set of numbers in a sequence.")
+    print("[+] 2. Search about a sequence.")
+    print("[+] 3. Advanced Search")
     pass
 
 
-def search(s,l=[],show=5):
-    if type(s)==str: #might be a list of strings and functions
-        if s=='':
-            print("Empty search!")
-            return 0
-        s=s.split(',')
-        s=[e.strip() for e in s]
-        if s[-1]=='':
-            s[-1]='_' #just so the next check doesn't fail
-        if s[-1][-1]=='*':
-            pass
-        elif s[-1][-1]=='!':#end of sequence
-            s=s[:-1]
-        else:
-            if s[-1]=='+':
-                s[-1] = '>=*'
-            elif s[-1]=='++':
-                s[-1] = '>*'
-            else:
-                s.append('*')
-    valid_indices=[]
-    for i in range(1,len(A)): #start at A000001
-        a=A[i]
-        v = parse(s,a,l)
-        if v==2:
-            valid_indices.append(i)
-            if len(valid_indices)<=show:
-                print(names[i])
-                print(a)
-    if len(valid_indices)>show:
-        extras = len(valid_indices)-show
-        print("%d more result%s not shown." % (extras,['s',''][extras == 1]))
-    elif valid_indices==[]:
-        print("No compatible results found.")
-    else:
-        print('='*20)
-    return valid_indices
+def echo_advanced():
+    print("[+] 1. Shift The Sequence with Constant and Search")
+    print("[+] 2. Scale The Sequence with Constant and Search")
+    print("[+] 3. Shift The Sequence with (N, N+1, N+2 ..., N + length_of_sequence) and Search")
+    print("[+] 4. Scale The Sequence with (N, N+1, N+2 ..., N + length_of_sequence) and Search")
+    print("[+] 5. Scale and Shift The Sequence with Constant and Search")
+    print("[+] 6. Scale and Shift The Sequence with (N, N+1, N+2 ..., N + length_of_sequence) and Search")
+    ####################################################################################################################
+    print("[+] 7. Search About Differences Between Adjacent Terms of The Input Sequence")
+    print("[+] 8. Search About Sums Between Adjacent Terms of The Input Sequence")
+    print("[+] 9. Search About Products Between Adjacent Terms of The Input Sequence")
+    ####################################################################################################################
+    print("[+] 10. Shift with Primes")
+    print("[+] 11. Scale with Primes")
+    ####################################################################################################################
+    print("[+] 12. Search About Similar Sequence")
+    print("[+] 13. Check If the Sequence is The Summation of Two Sequences (Too Much Time - Need Enhancement)")
+    print("[+] 14. Check If the Sequence is The Product of Two Sequences (Too Much Time - Need Enhancement)")
+    ####################################################################################################################
+    print("[+] 15. Search About Cumulative Sums of The Input")
+    print("[+] 16. Search About Cumulative Products of The Input")
+    ####################################################################################################################
+    print("[+] 17. Check if The Input is a Difference of a Sequence in The Database")
+    print("[+] 18. Check if The Input is a Sum of Adjacent Terms of a Sequence in The Database")
+    print("[+] 19. Check if The Input is a Product of Adjacent Terms of a Sequence in The Database")
+    print("[+] 20. Check if The Input is a Cumulative Sum of a Sequence in The Database")
+    print("[+] 21. Check if The Input is a Cumulative Product of a Sequence in The Database")
+    ####################################################################################################################
+    print("[+] A. Operation Design on Input (To Be Added Later)")
+    print("[+] B. Operation Design on Database (To Be Added Later)")
+    pass
 
-ipt=''
-while len(ipt)==0 or ipt[0]!='q':
-    ipt=input()
-    r=search(ipt,show=10)
+
+def echo_syntax():
+    print("[+] Reminder:")
+    print("---> 1, ?3, 5, 7   ---> The second, third and forth sequences could be anything")
+    print("---> 1, ?*, 18, 13 ---> Any number of terms between 1 and 100")
+    print("---> 1, 2-5, 10-15 ---> The second term between 2 and 5, the third between 5 and 10")
+    pass
+
+
+def print_ret(returned_list: list):
+    if len(returned_list) == 0:
+        print(_NOT_FOUND)
+    else:
+        for i in range(0, len(returned_list)):
+            print(returned_list[i][0:returned_list[i].find(',')])
+            # print(returned_list[i])
+
+
+if __name__ == "__main__":
+
+    while True:
+        echo_main()
+        choice = input(_YOUR_CHOICE)
+
+        if choice == '2':
+            echo_syntax()
+
+        seq_input = input(_YOUR_SEQ)
+        print("[#]")
+
+        if choice == '1':
+            if not utils.is_all_terms_are_fixed_numbers(seq_input):
+                print(_NO_PATTERN)
+                continue
+            ret = eng.unordered_search(seq_input)
+            print_ret(ret)
+
+        elif choice == '2':
+            if not utils.is_seq_contains_fixed_numbers(seq_input):
+                print(_ONE_NUMBER)
+                continue
+            ret = eng.ordered_search(seq_input)
+            print_ret(ret)
+
+        elif choice == '3':
+            if not utils.is_all_terms_are_fixed_numbers(seq_input):
+                print(_NO_PATTERN)
+                continue
+            echo_advanced()
+            choice = input(_YOUR_CHOICE)
+            ############################################################################################################
+            if choice == '1':
+                range_param = input(_MAX_SHIFT_VALUE_N_TO_N)
+                eng1.adv_search_shift_constant(seq_input, int(range_param))
+                pass
+
+            elif choice == '2':
+                range_param = input(_MAX_SHIFT_VALUE_N_TO_N)
+                eng1.adv_search_scale_constant(seq_input, int(range_param))
+                pass
+
+            elif choice == '3':
+                range_param = input(_MAX_N_VALUE_N_TO_N)
+                eng1.adv_search_shift_n(seq_input, int(range_param))
+                pass
+
+            elif choice == '4':
+                range_param = input(_MAX_N_VALUE_N_TO_N)
+                eng1.adv_search_scale_n(seq_input, int(range_param))
+                pass
+
+            elif choice == '5':
+                range_param = input(_MAX_SHIFT_VALUE_N_TO_N)
+                eng1.adv_search_shift_and_scale_constant(seq_input, int(range_param))
+                pass
+
+            elif choice == '6':
+                range_param = input(_MAX_N_VALUE_N_TO_N)
+                eng1.adv_search_shift_and_scale_n(seq_input, int(range_param))
+                pass
+            ############################################################################################################
+            elif choice == '7':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng2.adv_search_adjacent_terms_difference(seq_input, int(range_param))
+                pass
+
+            elif choice == '8':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng2.adv_search_adjacent_terms_sum(seq_input, int(range_param))
+                pass
+
+            elif choice == '9':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng2.adv_search_adjacent_terms_product(seq_input, int(range_param))
+                pass
+            ############################################################################################################
+            elif choice == '10':
+                prime_start = input(_PRIME_START_POINT)
+                prime_end = input(_PRIME_END_POINT)
+                eng3.adv_search_primes_shift(seq_input, int(prime_start), int(prime_end))
+                pass
+
+            elif choice == '11':
+                prime_start = input(_PRIME_START_POINT)
+                prime_end = input(_PRIME_END_POINT)
+                eng3.adv_search_primes_scale(seq_input, int(prime_start), int(prime_end))
+                pass
+            ############################################################################################################
+            elif choice == '12':
+                shift_tolerance = input(_TOLERANCE_VALUE)
+                eng4.adv_search_find_similar(seq_input, int(shift_tolerance))
+                pass
+
+            elif choice == '13':
+                eng4.adv_search_summation_of_two_seq(seq_input)
+                pass
+
+            elif choice == '14':
+                eng4.adv_search_product_of_two_seq(seq_input)
+                pass
+            ############################################################################################################
+            elif choice == '15':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng2.adv_search_cumulative_sum(seq_input, int(range_param))
+                pass
+
+            elif choice == '16':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng2.adv_search_cumulative_product(seq_input, int(range_param))
+                pass
+            ############################################################################################################
+            elif choice == '17':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng5.adv_search_differences(seq_input, int(range_param))
+                pass
+
+            elif choice == '18':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng5.adv_search_sums(seq_input, int(range_param))
+                pass
+
+            elif choice == '19':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng5.adv_search_products(seq_input, int(range_param))
+                pass
+
+            elif choice == '20':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng5.adv_search_cumulative_sum(seq_input, int(range_param))
+                pass
+
+            elif choice == '21':
+                range_param = input(_MAX_LEVEL_VALUE)
+                eng5.adv_search_cumulative_product(seq_input, int(range_param))
+                pass
+            ############################################################################################################
