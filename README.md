@@ -1,8 +1,8 @@
 # Sequence Searcher
-Sequence searcher is a program to perform advanced and complex search queries on the
+Sequence searcher is a project that aims to empower search abilities and enable performing advanced and complex search queries on
     [The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/) database.
-The OEIS database is searchable by keyword and by subsequence and this script provides more advanced options to search
-    in the database. 
+The OEIS database is searchable by keyword and by subsequence and this project provides more advanced options to search
+    in the database (Not to be confused with the official [OEIS](https://oeis.org/) search engine).
 
 
 
@@ -19,7 +19,7 @@ The OEIS database is searchable by keyword and by subsequence and this script pr
 ###### Range 
 * `1, 5, ?1, 13, 20--23`: The third term could be any number, the fifth is between 20 and 23.
 * `1--4, 5, ?1, 13, 20--30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
-###### The script will search anywhere in the sequence and not from the beginning. Other techniques could be added upon request.
+###### Searching will be perfomed any where in the sequence, i.e. it is not limited to the begining of the sequence. 
 ### Advanced Search Queries
 1. Shift The Sequence with Constant and Search
 2. Scale The Sequence with Constant and Search
@@ -45,14 +45,15 @@ The OEIS database is searchable by keyword and by subsequence and this script pr
 22. Design your own operation ... (To be added)
 
 
+
 # OEIS Database and Instructions
-The database that is used by the script is part of the intellectual property of the 
+The database that is used in this project is part of the intellectual property of 
 [The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/),
 which is the official search engine for the database.
 However, the database is made available under the
 [Creative Commons Attribution Non-Commercial 3.0 license](https://creativecommons.org/licenses/by-nc/3.0/)
-and you have to download it from the official website before using the script: 
-1. Clone this repository or download it as a zip archive from GitHub
+and you have to download it from the official website before using this project: 
+1. Clone this repository or download it as a zip archive from GitHub.
 2. Download two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
 3. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
 4. Move these two files to the `data` directory.
@@ -69,5 +70,6 @@ and you have to download it from the official website before using the script:
 - [ ] Change The Functions Structure and Add Testing Unit
 - [ ] Input Validation 
 - [ ] Sequence Input Enhancement 
+- [ ] Le Rabot - with extended version
 
 For Suggestions ... ("mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.] jo")
