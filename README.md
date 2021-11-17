@@ -48,7 +48,7 @@ The OEIS database is searchable by keyword and by subsequence and this script pr
 # OEIS Database and Instructions
 The database that is used by the script is part of the intellectual property of the 
 [The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/),
-which is the main search engine for the database.
+which is the official search engine for the database.
 However, the database is made available under the
 [Creative Commons Attribution Non-Commercial 3.0 license](https://creativecommons.org/licenses/by-nc/3.0/)
 and you have to download it from the official website before using the script: 

@@ -1,0 +1,8 @@
+The database that is used by the script is part of the intellectual property of the The Online Encyclopedia of Integer Sequences (OEIS) (https://oeis.org/), which is the main search engine for the database.
+However, the database is made available under the Creative Commons Attribution Non-Commercial 3.0 license (https://creativecommons.org/licenses/by-nc/3.0/) and you have to download it from the official website before using the script: 
+
+1. Clone the repository or download it as a zip archive from GitHub.
+2. Download two compressed files given (https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
+3. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
+4. Move these two files to the `data` directory.
+5. Run `oeis.py` script and enjoy!
