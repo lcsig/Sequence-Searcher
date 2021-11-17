@@ -1,5 +1,8 @@
-# OEIS Search Engine
-OEIS Search Engine is a program to perform search queries on the OEIS Database (The script is still under development and testing)
+# Sequence Searcher
+Sequence searcher is a program to perform advanced and complex search queries on the
+    [The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/) database.
+The OEIS database is searchable by keyword and by subsequence and this script provides more advanced options to search
+    in the database. 
 
 
 
@@ -42,20 +45,27 @@ OEIS Search Engine is a program to perform search queries on the OEIS Database (
 22. Design your own operation ... (To be added)
 
 
-
+# OEIS Database and Instructions
+The database that is used by the script is part of the intellectual property of the 
+[The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/),
+which is the main search engine for the database.
+However, the database is made available under the
+[Creative Commons Attribution Non-Commercial 3.0 license](https://creativecommons.org/licenses/by-nc/3.0/)
+and you have to download it from the official website before using the script: 
+1. Clone this repository or download it as a zip archive from GitHub
+2. Download two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
+3. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
+4. Move these two files to the `data` directory.
+5. Run `oeis.py` script and enjoy!
 # Notes
-## Database Update
-To update the database:
-1. Download two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
-2. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
-3. Move these two files to the `data` directory.
-4. Run `oeis.py` script and enjoy!
 ## TODO 
+- [ ] Speed Enhancement (20H)
+- [ ] Fuzzy Matching (30H)
+- [ ] Search by Terms with a Variable (30H)
 - [ ] Add More Options in Simple Search Queries (Prime, Odd, Even, Mod, ORing, ANDing)
 - [ ] Support Parenthesis
 - [ ] Intelligent Search Operation
-- [ ] Operation Design 
-- [ ] Speed Enhancement
+- [ ] Operation Design
 - [ ] Change The Functions Structure and Add Testing Unit
 - [ ] Input Validation 
 - [ ] Sequence Input Enhancement 
