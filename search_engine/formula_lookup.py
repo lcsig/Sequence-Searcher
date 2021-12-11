@@ -1,6 +1,6 @@
 import time
 
-import search_engine.seq as utils
+import search_engine.utils as utils
 import multiprocessing
 
 from search_engine import seq_list_numeric

@@ -78,7 +78,7 @@ and you have to download it from the official website before using this project:
 4. Move these two files to the `data` directory.
 5. Install the requirements `pip3 install -r requirements.txt`. 
    * [More details](https://pip.pypa.io/en/stable/user_guide/#requirements-files).
-6. Run `oeis.py` and enjoy!
+6. Run `main.py` and enjoy!
 7. Note: The script was only tested on Linux using Python 3.8.10
 
 # Notes

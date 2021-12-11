@@ -1,5 +1,5 @@
 import re
-import search_engine.seq as utils
+import search_engine.utils as utils
 
 
 from search_engine import seq_list

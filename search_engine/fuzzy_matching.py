@@ -1,7 +1,7 @@
 from search_engine import seq_list_numeric
 from search_engine import convert_str_to_list
 from search_engine import seq_list
-import search_engine.seq as utils
+import search_engine.utils as utils
 
 """
 This file contains the implementations for fuzzy match algorithm

@@ -2,7 +2,7 @@
 Data Lading Section ... 
 """
 import os
-from .seq import convert_str_to_list
+from .utils import convert_str_to_list
 
 
 # Echo & Definitions

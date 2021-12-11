@@ -5,4 +5,4 @@ However, the database is made available under the Creative Commons Attribution N
 2. Download two compressed files given (https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
 3. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
 4. Move these two files to the `data` directory.
-5. Run `oeis.py` script and enjoy!
+5. Run `main.py` script and enjoy!

@@ -4,4 +4,5 @@ data/names
 .idea/
 venv/
 **/*.pyc
+dumb_code.py
 

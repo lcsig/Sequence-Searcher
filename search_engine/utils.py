@@ -39,13 +39,6 @@ def is_pattern_exist(seq: str):
     return pattern_exist
 
 
-def print_seq(numeric_seq):
-    print("    Current Seq ---> ")
-    for n in range(len(numeric_seq)):
-        print(str(numeric_seq[n]) + ", ", end='')
-    print("\n[#]")
-
-
 def is_prime(num: int):
     """
     A function to check if a number is a prime number

@@ -1,4 +1,4 @@
-import search_engine.seq as utils
+import search_engine.utils as utils
 import search_engine.normal_search as eng
 
 
