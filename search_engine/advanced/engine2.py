@@ -1,5 +1,6 @@
-import modules.seq as utils
-import modules.seq_calc as utils_calc
+import search_engine.seq as utils
+import search_engine.seq_calc as utils_calc
+import search_engine.normal_search as eng
 
 """
 Contains:
@@ -9,9 +10,6 @@ Contains:
 15. Search About Cumulative Sums
 16. Search About Cumulative Products
 """
-
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
 
 
 def adv_search_adjacent_terms_difference(seq: str, diff_level: int):
@@ -30,7 +28,7 @@ def adv_search_adjacent_terms_difference(seq: str, diff_level: int):
     for i in range(diff_level):
         numeric_seq_diff = diffs_list[i]
         string_seq_differentiated = ','.join(str(x) for x in numeric_seq_diff)
-        utils.search_and_echo(string_seq_differentiated, i + 1, "Difference Level")
+        eng.search_and_echo(string_seq_differentiated, i + 1, "Difference Level")
 
 
 def adv_search_adjacent_terms_sum(seq: str, cum_sum_level: int):
@@ -49,7 +47,7 @@ def adv_search_adjacent_terms_sum(seq: str, cum_sum_level: int):
     for i in range(cum_sum_level):
         numeric_seq_cumulative = sums_list[i]
         string_seq_cumulative = ','.join(str(x) for x in numeric_seq_cumulative)
-        utils.search_and_echo(string_seq_cumulative, i + 1, "Sum Level")
+        eng.search_and_echo(string_seq_cumulative, i + 1, "Sum Level")
 
 
 def adv_search_adjacent_terms_product(seq: str, cum_prod_level: int):
@@ -68,7 +66,7 @@ def adv_search_adjacent_terms_product(seq: str, cum_prod_level: int):
     for i in range(cum_prod_level):
         numeric_seq_cum_product = products_list[i]
         string_seq_cum_product = ','.join(str(x) for x in numeric_seq_cum_product)
-        utils.search_and_echo(string_seq_cum_product, i + 1, "Product Level")
+        eng.search_and_echo(string_seq_cum_product, i + 1, "Product Level")
 
 
 def adv_search_cumulative_sum(seq: str, cum_sum_level: int):
@@ -84,7 +82,7 @@ def adv_search_cumulative_sum(seq: str, cum_sum_level: int):
     for i in range(cum_sum_level):
         numeric_seq_cumulative = cum_sum_list[i]
         string_seq_cumulative = ','.join(str(x) for x in numeric_seq_cumulative)
-        utils.search_and_echo(string_seq_cumulative, i + 1, "Cumulative Sum Level")
+        eng.search_and_echo(string_seq_cumulative, i + 1, "Cumulative Sum Level")
 
 
 def adv_search_cumulative_product(seq: str, cum_prod_level: int):
@@ -100,4 +98,4 @@ def adv_search_cumulative_product(seq: str, cum_prod_level: int):
     for i in range(cum_prod_level):
         numeric_seq_cum_product = cum_product_list[i]
         string_seq_cum_product = ','.join(str(x) for x in numeric_seq_cum_product)
-        utils.search_and_echo(string_seq_cum_product, i + 1, "Cumulative Product Level")
+        eng.search_and_echo(string_seq_cum_product, i + 1, "Cumulative Product Level")

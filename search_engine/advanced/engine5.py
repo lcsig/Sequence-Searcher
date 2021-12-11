@@ -1,5 +1,5 @@
-import modules.seq as utils
-import modules.seq_calc as utils_calc
+import search_engine.seq as utils
+import search_engine.seq_calc as utils_calc
 
 """
 Contains:
@@ -10,8 +10,7 @@ Contains:
 21. Check if The Input is a Cumulative Product of A Sequence in The Database
 """
 
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
+from search_engine import seq_list_numeric
 
 
 def print_result_list(result_list):

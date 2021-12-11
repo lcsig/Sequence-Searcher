@@ -1,14 +1,12 @@
-import modules.seq as utils
-import modules.seq_calc as utils_calc
+import search_engine.seq as utils
+import search_engine.seq_calc as utils_calc
+import search_engine.normal_search as eng
 
 """
 Contains:
 10. Shift with Primes and Search
 11. Scale with Primes and Search
 """
-
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
 
 
 def adv_search_primes_shift(seq: str, prime_start_point: int, prime_end_point: int):
@@ -32,7 +30,7 @@ def adv_search_primes_shift(seq: str, prime_start_point: int, prime_end_point: i
         numeric_seq_primes_added = utils_calc.add_sequences(numeric_seq, primes_list[i:(len(numeric_seq) + i)])
         string_seq_primes_added = ','.join(str(x) for x in numeric_seq_primes_added)
 
-        utils.search_and_echo(string_seq_primes_added, primes_list[i], "Primes Start Point")
+        eng.search_and_echo(string_seq_primes_added, primes_list[i], "Primes Start Point")
 
 
 def adv_search_primes_scale(seq: str, prime_start_point: int, prime_end_point: int):
@@ -56,4 +54,4 @@ def adv_search_primes_scale(seq: str, prime_start_point: int, prime_end_point: i
         numeric_seq_primes_added = utils_calc.multiply_sequences(numeric_seq, primes_list[i:(len(numeric_seq) + i)])
         string_seq_primes_added = ','.join(str(x) for x in numeric_seq_primes_added)
 
-        utils.search_and_echo(string_seq_primes_added, primes_list[i], "Primes Start Point")
+        eng.search_and_echo(string_seq_primes_added, primes_list[i], "Primes Start Point")

@@ -7,9 +7,14 @@ The OEIS database is searchable by keyword and by subsequence and this project p
 
 
 # Search Queries
-### Simple Search Queries
-###### Order
+The search features are divided into the following sections:
+
+### 1. Search without Order
+It gives you the capability to search about a set of numbers in the sequence: 
 * `1, 2, 3, 4`: Sequence contains these four terms without considering order. 
+
+### 2. Search with Keys 
+###### Normal Search Considering Terms Order
 * `1, 2, 3, 4`: Sequence contains these four terms in the same order anywhere in the sequence.
 ###### Question Mark
 * `1, 5, ?1, 13, 20`: The third term could be any number (The question mark indicates any possible number).
@@ -19,8 +24,22 @@ The OEIS database is searchable by keyword and by subsequence and this project p
 ###### Range 
 * `1, 5, ?1, 13, 20--23`: The third term could be any number, the fifth is between 20 and 23.
 * `1--4, 5, ?1, 13, 20--30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
-###### Searching will be perfomed any where in the sequence, i.e. it is not limited to the begining of the sequence. 
-### Advanced Search Queries
+Note: The search process will show results anywhere in the sequence, i.e. it is not limited to the beginning of the sequence. 
+
+### 3. Fuzzy Matching 
+This algorithm allows terms in the sequence to be off by one or two, and it would still match.
+Also, the results will be ranked according to the number of the dropped terms.
+
+### 4. Searching using Terms Lookup Formula
+This method allows you to match sequences in the database to formula or terms with a variable
+* `n / 10, n, n * 5, n ^ 2, 3*n+2`: These terms can match the following sequence `1, 10, 50, 100, 32`
+
+The supported operations are:
+1. Multiplication (*), Division (/), Addition (+), Subtraction (-) and Power (^).
+2. Sin, Cos, Tan and Exp (e^number).
+3. Round, fix or trunc, abs, floor and ceil.
+
+### 5. Advanced Search Queries
 1. Shift The Sequence with Constant and Search
 2. Scale The Sequence with Constant and Search
 3. Shift The Sequence with (N, N+1, N+2 ...) and Search
@@ -57,19 +76,31 @@ and you have to download it from the official website before using this project:
 2. Download two compressed files given [here](https://oeis.org/wiki/Welcome#Compressed_Versions) from OEIS.
 3. Decompress the files, which should have default filenames of `names` and `stripped` (without .txt).
 4. Move these two files to the `data` directory.
-5. Run `oeis.py` script and enjoy!
+5. Install the requirements `pip3 install -r requirements.txt`. 
+   * [More details](https://pip.pypa.io/en/stable/user_guide/#requirements-files).
+6. Run `oeis.py` and enjoy!
+7. Note: Tested using Python 3.8.10
+
 # Notes
-## TODO 
-- [ ] Speed Enhancement (20H)
-- [ ] Fuzzy Matching (30H)
-- [ ] Search by Terms with a Variable (30H)
+### Special Thanks 
+* Dr. Neil J. Sloane for his suggestions of Fuzzy Matching and Searching by Terms Lookup Formula. 
+
+### For Suggestions 
+mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.] jo
+
+### TODO 
+- [ ] Speed Enhancement for Summation/Multiplication of Two Sequences
+- [X] Fuzzy Matching
+- [ ] Fuzzy Matching - Implement GAP size control.
+- [X] Search by Terms with a Variable 
+- [X] Terms Lookup Formula Speed Enhancement
 - [ ] Add More Options in Simple Search Queries (Prime, Odd, Even, Mod, ORing, ANDing)
 - [ ] Support Parenthesis
 - [ ] Intelligent Search Operation
 - [ ] Operation Design
-- [ ] Change The Functions Structure and Add Testing Unit
+- [X] Add Testing Unit
+- [ ] Change The Functions Structure - Refactoring
 - [ ] Input Validation 
 - [ ] Sequence Input Enhancement 
 - [ ] Le Rabot - with extended version
 
-For Suggestions ... ("mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.] jo")

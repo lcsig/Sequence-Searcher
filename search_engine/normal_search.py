@@ -1,8 +1,8 @@
 import re
-import modules.seq as utils
+import search_engine.seq as utils
 
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
+
+from search_engine import seq_list
 
 
 def parse_pattern(seq: str):
@@ -42,9 +42,6 @@ def unordered_search(seq: str):
     """
     Search about the terms in seq
     """
-    if not utils.is_all_terms_are_fixed_numbers(seq):
-        return []
-
     seq_returned: list = []
     terms: list
 
@@ -118,9 +115,6 @@ def ordered_search(seq: str):
     Search about a sequence - Support Patterns Search
     returns: A list of sequences that contains all the matching sequence
     """
-    if not utils.is_seq_contains_fixed_numbers(seq):
-        return []
-
     seq_returned: list
     seq = seq.replace(" ", "")
 
@@ -173,3 +167,28 @@ def sequence_search_no_pattern(seq: str):
             seq_returned.append(seq_list[i])
 
     return seq_returned
+
+
+def search_and_echo(sequence_after_applying_operation: str, current_value: int = 0, echo_string: str = ""):
+    """
+    A function that is used by the advanced search operations
+    returns: nothing
+    """
+    # Search
+    returned_list = ordered_search(sequence_after_applying_operation)
+
+    # Echo Sequence
+    if echo_string != "":
+        print("[+] Current " + echo_string + ": " + str(current_value))
+
+    # Echo Results
+    print("    Current Seq ---> " + sequence_after_applying_operation)
+    if len(returned_list) == 0:
+        print("    Results ---> Nothing Found", end='')
+    else:
+        print("    Results ---> ", end='')
+        for d in range(0, len(returned_list)):
+            print(returned_list[d][0:returned_list[d].find(',')], end='')
+
+    # Done
+    print("\n[#]")

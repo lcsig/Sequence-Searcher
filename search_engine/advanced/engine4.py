@@ -1,5 +1,5 @@
-import modules.seq as utils
-import modules.seq_calc as utils_calc
+import search_engine.seq as utils
+import search_engine.seq_calc as utils_calc
 
 
 """
@@ -9,8 +9,32 @@ Contains:
 14. Check if The Sequence is The Product of Two Sequences
 """
 
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
+from search_engine import seq_list_numeric
+
+
+def list_a_in_b_similar(a: list, b: list, tolerance: int):
+    """
+    Check if list A elements are exist in list B elements while preserving the order
+    a: The first list where a belong to b and should preserve the order
+    b: The second container list where a should exist in b while preserving the order
+    tolerance: The tolerance value on each term such that a in b when b = [a[n] +- tol, a[n+1] +- tol, ... etc]
+    returns: True if A in [B +- tolerance], False otherwise.
+    """
+    if len(a) > len(b):
+        return False
+    elif len(a) == len(b):
+        return a == b
+    else:
+        for seq_start in range(len(b) - len(a) + 1):
+            contains_flag = True
+            for n in range(len(a)):
+                if a[n] > b[seq_start + n] + tolerance or a[n] < b[seq_start + n] - tolerance:
+                    contains_flag = False
+                    break
+            if contains_flag:
+                return True
+
+        return False
 
 
 def adv_search_find_similar(seq: str, tolerance_value: int):
@@ -24,7 +48,7 @@ def adv_search_find_similar(seq: str, tolerance_value: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        if utils.list_a_in_b_similar(numeric_seq, seq_list_numeric[i], tolerance_value):
+        if list_a_in_b_similar(numeric_seq, seq_list_numeric[i], tolerance_value):
             result_list.append(i + 1)
 
         utils.waiting(i, len(seq_list_numeric))
@@ -35,6 +59,30 @@ def adv_search_find_similar(seq: str, tolerance_value: int):
         print("\n[#]")
     for i in range(len(result_list)):
         print("A" + str(result_list[i]))
+
+
+def two_sum_hashes(num_list: list, target_sum: int):
+    """
+    This method solves the two sum problem in linear time
+    num_list: List of integers where we need to find two numbers in this list that have a summation of target_sum
+    target_sum: The target summation where num_list[x] + num_list[y] = target_sum
+    returns: List of set of integers where each set contains two indices for the num_list where
+        num_list[x] + num_list[y] = target_sum
+    """
+    sums = []
+    hashTable = {}
+    hashTable2 = {}
+
+    for i in range(len(num_list)):
+        complement = target_sum - num_list[i]
+        if complement in hashTable:
+            print("Pair with sum", target_sum, "is: (", num_list[i], ",", complement, ")")
+            hashTable2[num_list[i]] = complement
+
+        hashTable[num_list[i]] = num_list[i]
+
+
+    print(hashTable2)
 
 
 def adv_search_summation_of_two_seq(seq: str):

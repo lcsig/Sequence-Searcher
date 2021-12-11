@@ -1,4 +1,5 @@
-import modules.seq as utils
+import search_engine.seq as utils
+import search_engine.normal_search as eng
 
 
 """
@@ -10,9 +11,6 @@ Contains:
 5. Scale and Shift The Sequence with Constant and Search
 6. Scale and Shift The Sequence with (N, N+1, N+2 ...) and Search
 """
-
-seq_list = utils.seq_list
-seq_list_numeric = utils.seq_list_numeric
 
 
 def adv_search_shift_constant(seq: str, max_constant: int):
@@ -33,7 +31,7 @@ def adv_search_shift_constant(seq: str, max_constant: int):
             numeric_seq_shifted[n] = numeric_seq[n] + i
         string_seq_shifted = ','.join(str(x) for x in numeric_seq_shifted)
 
-        utils.search_and_echo(string_seq_shifted, i, "Shift Value")
+        eng.search_and_echo(string_seq_shifted, i, "Shift Value")
 
 
 def adv_search_scale_constant(seq: str, max_constant: int):
@@ -54,7 +52,7 @@ def adv_search_scale_constant(seq: str, max_constant: int):
             numeric_seq_multiplied[n] = numeric_seq[n] * i
         string_seq_multiplied = ','.join(str(x) for x in numeric_seq_multiplied)
 
-        utils.search_and_echo(string_seq_multiplied, i, "Multiplication Value")
+        eng.search_and_echo(string_seq_multiplied, i, "Multiplication Value")
 
 
 def adv_search_shift_n(seq: str, max_constant: int):
@@ -74,7 +72,7 @@ def adv_search_shift_n(seq: str, max_constant: int):
             numeric_seq_shifted[n] = numeric_seq[n] + (i + n)
         string_seq_shifted = ','.join(str(x) for x in numeric_seq_shifted)
 
-        utils.search_and_echo(string_seq_shifted, i, "Shift Value")
+        eng.search_and_echo(string_seq_shifted, i, "Shift Value")
 
 
 def adv_search_scale_n(seq: str, max_constant: int):
@@ -94,7 +92,7 @@ def adv_search_scale_n(seq: str, max_constant: int):
             numeric_seq_multiplied[n] = numeric_seq[n] * (i + n)
         string_seq_multiplied = ','.join(str(x) for x in numeric_seq_multiplied)
 
-        utils.search_and_echo(string_seq_multiplied, i, "Multiplication Value")
+        eng.search_and_echo(string_seq_multiplied, i, "Multiplication Value")
 
 
 def adv_search_shift_and_scale_constant(seq: str, constant: int):
@@ -116,7 +114,7 @@ def adv_search_shift_and_scale_constant(seq: str, constant: int):
             numeric_seq_shifted[n] = numeric_seq[n] * i + i
         string_seq_shifted = ','.join(str(x) for x in numeric_seq_shifted)
 
-        utils.search_and_echo(string_seq_shifted, i, "Shift Value")
+        eng.search_and_echo(string_seq_shifted, i, "Shift Value")
 
 
 def adv_search_shift_and_scale_n(seq: str, max_constant: int):
@@ -138,18 +136,18 @@ def adv_search_shift_and_scale_n(seq: str, max_constant: int):
             numeric_seq_multiplied[n] = numeric_seq[n] * i + (n + 1)
         string_seq_multiplied = ','.join(str(x) for x in numeric_seq_multiplied)
 
-        utils.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * constant + n(i))")
+        eng.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * constant + n(i))")
 
         # Calculate the Sequence
         for n in range(len(numeric_seq)):
             numeric_seq_multiplied[n] = numeric_seq[n] * (n + 1) + i
         string_seq_multiplied = ','.join(str(x) for x in numeric_seq_multiplied)
 
-        utils.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * n(i) + constant)")
+        eng.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * n(i) + constant)")
 
         # Calculate the Sequence
         for n in range(len(numeric_seq)):
             numeric_seq_multiplied[n] = numeric_seq[n] * (n + i) + (i + n)
         string_seq_multiplied = ','.join(str(x) for x in numeric_seq_multiplied)
 
-        utils.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * n(i) + n(i))")
+        eng.search_and_echo(string_seq_multiplied, i, "Multiplication Value (x * n(i) + n(i))")

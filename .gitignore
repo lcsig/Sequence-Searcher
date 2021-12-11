@@ -1,0 +1,7 @@
+data/stripped
+data/names
+*.pyc
+.idea/
+venv/
+**/*.pyc
+
