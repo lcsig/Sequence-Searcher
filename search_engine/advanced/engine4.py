@@ -1,7 +1,6 @@
 import search_engine.seq as utils
 import search_engine.seq_calc as utils_calc
 
-
 """
 Contains:
 12. Search About Similar Sequence
@@ -10,6 +9,8 @@ Contains:
 """
 
 from search_engine import seq_list_numeric
+from search_engine import seq_list
+from search_engine import get_sequence_name
 
 
 def list_a_in_b_similar(a: list, b: list, tolerance: int):
@@ -49,7 +50,7 @@ def adv_search_find_similar(seq: str, tolerance_value: int):
     result_list = []
     for i in range(0, len(seq_list_numeric)):
         if list_a_in_b_similar(numeric_seq, seq_list_numeric[i], tolerance_value):
-            result_list.append(i + 1)
+            result_list.append(get_sequence_name(seq_list[i]))
 
         utils.waiting(i, len(seq_list_numeric))
 
@@ -58,7 +59,7 @@ def adv_search_find_similar(seq: str, tolerance_value: int):
     else:
         print("\n[#]")
     for i in range(len(result_list)):
-        print("A" + str(result_list[i]))
+        print(result_list[i])
 
 
 def two_sum_hashes(num_list: list, target_sum: int):
@@ -81,7 +82,6 @@ def two_sum_hashes(num_list: list, target_sum: int):
 
         hashTable[num_list[i]] = num_list[i]
 
-
     print(hashTable2)
 
 
@@ -94,21 +94,22 @@ def adv_search_summation_of_two_seq(seq: str):
     numeric_seq = utils.convert_str_to_list(seq, True, False)
 
     result_list = []
-    for i in range(0, len(seq_list_numeric)):
-        for n in range(i + 1, len(seq_list_numeric)):
+    seq_len = len(seq_list_numeric)
+    for i in range(0, seq_len):
+        for n in range(i + 1, seq_len):
             seq_result = utils_calc.add_sequences(seq_list_numeric[i], seq_list_numeric[n])
             if utils.list_a_in_b(numeric_seq, seq_result):
-                result_list.append([i + 1, n + 1])
+                result_list.append([get_sequence_name(seq_list[i]), get_sequence_name(seq_list[n])])
 
         # Progress ...
-        utils.waiting(i, len(seq_list_numeric))
+        utils.waiting(i, seq_len)
 
     if len(result_list) == 0:
         print("\n[#] Nothing Found")
     else:
         print("\n[#]")
     for i in range(len(result_list)):
-        print("A" + str(result_list[i][0]) + " <--> " + "A" + str(result_list[i][1]))
+        print(result_list[i][0] + " <--> " + result_list[i][1])
 
 
 def adv_search_product_of_two_seq(seq: str):
@@ -124,7 +125,7 @@ def adv_search_product_of_two_seq(seq: str):
         for n in range(i + 1, len(seq_list_numeric)):
             seq_result = utils_calc.multiply_sequences(seq_list_numeric[i], seq_list_numeric[n])
             if utils.list_a_in_b(numeric_seq, seq_result):
-                result_list.append([i + 1, n + 1])
+                result_list.append([get_sequence_name(seq_list[i]), get_sequence_name(seq_list[n])])
 
         # Progress ...
         utils.waiting(i, len(seq_list_numeric))
@@ -134,4 +135,4 @@ def adv_search_product_of_two_seq(seq: str):
     else:
         print("\n[#]")
     for i in range(len(result_list)):
-        print("A" + str(result_list[i][0]) + " <--> " + "A" + str(result_list[i][1]))
+        print(result_list[i][0] + " <--> " + result_list[i][1])

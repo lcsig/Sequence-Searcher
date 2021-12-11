@@ -22,6 +22,9 @@ for i in range(len(seq_list)):
 print("[+] Data Loading is Done Successfully ...")
 
 
+def get_sequence_name(sequence: str):
+    return sequence[0:sequence.find(',')].strip()
+
 
 from .fuzzy_matching import *
 from .formula_lookup import *

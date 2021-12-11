@@ -11,6 +11,8 @@ Contains:
 """
 
 from search_engine import seq_list_numeric
+from search_engine import seq_list
+from search_engine import get_sequence_name
 
 
 def print_result_list(result_list):
@@ -21,7 +23,7 @@ def print_result_list(result_list):
         return
 
     for i in range(len(result_list)):
-        print("A" + str(result_list[i][0]) + " <--> " + "Operation Level: " + str(result_list[i][1]))
+        print(result_list[i][0] + " <--> " + "Operation Level: " + str(result_list[i][1]))
 
 
 def adv_search_differences(seq: str, max_diff_level: int):
@@ -39,7 +41,7 @@ def adv_search_differences(seq: str, max_diff_level: int):
 
         for diff_level in range(max_diff_level):
             if utils.list_a_in_b(numeric_seq, seq_result[diff_level]):
-                result_list.append([i + 1, diff_level + 1])
+                result_list.append([get_sequence_name(seq_list[i]), diff_level + 1])
 
         utils.waiting(i, len(seq_list_numeric))
 
@@ -61,7 +63,7 @@ def adv_search_sums(seq: str, max_sum_level: int):
 
         for sum_level in range(max_sum_level):
             if utils.list_a_in_b(numeric_seq, seq_result[sum_level]):
-                result_list.append([i + 1, sum_level + 1])
+                result_list.append([get_sequence_name(seq_list[i]), sum_level + 1])
 
         utils.waiting(i, len(seq_list_numeric))
 
@@ -83,7 +85,7 @@ def adv_search_products(seq: str, max_product_level: int):
 
         for prod_level in range(max_product_level):
             if utils.list_a_in_b(numeric_seq, seq_result[prod_level]):
-                result_list.append([i + 1, prod_level + 1])
+                result_list.append([get_sequence_name(seq_list[i]), prod_level + 1])
 
         utils.waiting(i, len(seq_list_numeric))
 
@@ -105,7 +107,7 @@ def adv_search_cumulative_sum(seq: str, max_cumsum_level: int):
 
         for sum_level in range(max_cumsum_level):
             if utils.list_a_in_b(numeric_seq, seq_result[sum_level]):
-                result_list.append([i + 1, sum_level + 1])
+                result_list.append([get_sequence_name(seq_list[i]), sum_level + 1])
 
         utils.waiting(i, len(seq_list_numeric))
 
@@ -127,7 +129,7 @@ def adv_search_cumulative_product(seq: str, maximum_prod_level):
 
         for prod_level in range(maximum_prod_level):
             if utils.list_a_in_b(numeric_seq, seq_result[prod_level]):
-                result_list.append([i + 1, prod_level + 1])
+                result_list.append([get_sequence_name(seq_list[i]), prod_level + 1])
 
         utils.waiting(i, len(seq_list_numeric))
 

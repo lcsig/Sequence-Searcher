@@ -113,5 +113,3 @@ def waiting(completed: int, over_all: int):
 def waiting_with_index(index: int, completed: int, over_all: int):
     perc = round(completed / over_all * 100, 2)
     print_percentage_line(index, perc)
-
-

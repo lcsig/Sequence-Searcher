@@ -11,7 +11,7 @@ The search features are divided into the following sections:
 
 ### 1. Search without Order
 It gives you the capability to search about a set of numbers in the sequence: 
-* `1, 2, 3, 4`: Sequence contains these four terms without considering order. 
+* `1, 2, 3, 4`: Any sequence contains these four terms without considering order will match (E.g., A185577, 1, 5, 2, 1, 2, 7, 5, 1, 3, 8, 6, 4) 
 
 ### 2. Search with Keys 
 ###### Normal Search Considering Terms Order
@@ -79,7 +79,7 @@ and you have to download it from the official website before using this project:
 5. Install the requirements `pip3 install -r requirements.txt`. 
    * [More details](https://pip.pypa.io/en/stable/user_guide/#requirements-files).
 6. Run `oeis.py` and enjoy!
-7. Note: Tested using Python 3.8.10
+7. Note: The script was only tested on Linux using Python 3.8.10
 
 # Notes
 ### Special Thanks 
@@ -103,4 +103,4 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [ ] Input Validation 
 - [ ] Sequence Input Enhancement 
 - [ ] Le Rabot - with extended version
-
+- [ ] Test on Windows

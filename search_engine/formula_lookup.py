@@ -27,7 +27,7 @@ def is_expression_correct(exp_input: str):
 
         # Parse terms and trim spaces
         exp_input = exp_input.lower().split(',')
-        exp_input = list(map(lambda x: str(x).strip(), exp_input))
+        exp_input = list(map(lambda term_of_sequence: str(term_of_sequence).strip(), exp_input))
 
         # Calculate and Compare
         for i in range(len(exp_input)):
