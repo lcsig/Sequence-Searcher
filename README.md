@@ -91,14 +91,14 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 
 ### TODO 
 - [ ] Speed Enhancement for Summation/Multiplication of Two Sequences
-- [X] Fuzzy Matching
 - [ ] Fuzzy Matching - Implement GAP size control.
+- [ ] Operation Design
+- [X] Fuzzy Matching
 - [X] Search by Terms with a Variable 
 - [X] Terms Lookup Formula Speed Enhancement
 - [ ] Add More Options in Simple Search Queries (Prime, Odd, Even, Mod, ORing, ANDing)
 - [ ] Support Parenthesis
 - [ ] Intelligent Search Operation
-- [ ] Operation Design
 - [X] Add Testing Unit
 - [ ] Change The Functions Structure - Refactoring
 - [X] Input Validation 
