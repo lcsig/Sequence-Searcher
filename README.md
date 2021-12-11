@@ -38,6 +38,7 @@ The supported operations are:
 1. Multiplication (*), Division (/), Addition (+), Subtraction (-) and Power (^).
 2. Sin, Cos, Tan and Exp (e^number).
 3. Round, fix or trunc, abs, floor and ceil.
+4. Constants: PI and E.
 
 ### 5. Advanced Search Queries
 1. Shift The Sequence with Constant and Search
