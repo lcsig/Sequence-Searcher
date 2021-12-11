@@ -100,7 +100,7 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [ ] Operation Design
 - [X] Add Testing Unit
 - [ ] Change The Functions Structure - Refactoring
-- [ ] Input Validation 
+- [X] Input Validation 
 - [ ] Sequence Input Enhancement 
 - [ ] Le Rabot - with extended version
 - [ ] Test on Windows
