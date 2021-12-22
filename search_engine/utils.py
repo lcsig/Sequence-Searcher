@@ -89,13 +89,13 @@ def list_a_in_b(a: list, b: list):
 
 def print_percentage_line(index: int, perc: float):
     if index % 4 == 0:
-        print("---> [//] ---> (" + str(perc) + "%)", end='\r')
+        print("[#]> [//] ---> (" + str(perc) + "%)", end='\r')
     elif index % 4 == 1:
-        print("---> [--] ---> (" + str(perc) + "%)", end='\r')
+        print("[#]> [--] ---> (" + str(perc) + "%)", end='\r')
     elif index % 4 == 2:
-        print("---> [\\\\] ---> (" + str(perc) + "%)", end='\r')
+        print("[#]> [\\\\] ---> (" + str(perc) + "%)", end='\r')
     elif index % 4 == 3:
-        print("---> [||] ---> (" + str(perc) + "%)", end='\r')
+        print("[#]> [||] ---> (" + str(perc) + "%)", end='\r')
 
 
 def waiting(completed: int, over_all: int):

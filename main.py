@@ -31,6 +31,7 @@ def signal_handler(sig, frame):
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
+    old_sequence = ''
 
     while True:
         echo_main()
@@ -57,11 +58,21 @@ if __name__ == "__main__":
             echo_advanced()
 
         # Sequence Input and Validation
-        seq_input = input(_ENTER_YOUR_SEQ)
-        if ',' not in seq_input:
+        seq_input = input(_ENTER_YOUR_SEQ).replace(";", ",")
+        if seq_input.strip() == '':
+            seq_input = old_sequence
+            print("[+] Seq: " + seq_input)
+
+        if ',' not in seq_input and ' ' not in seq_input.strip():
             print(_CANT_IDENTIFY_THE_SEQUENCE)
             continue
-        elif (choice == '1' or choice == '3' or choice == '5') and not is_all_terms_are_fixed_numbers(seq_input):
+        elif ',' not in seq_input and ' ' in seq_input.strip():
+            seq_input = ' '.join(seq_input.strip().split()).replace(" ", ",")
+            print("[+] Seq: " + seq_input)
+        old_sequence = seq_input
+
+        # Validate Input Based on Choice
+        if (choice == '1' or choice == '3' or choice == '5') and not is_all_terms_are_fixed_numbers(seq_input):
             print(_SHOULD_NOT_CONTAINS_PATTERN)
             print(_CANT_IDENTIFY_THE_SEQUENCE)
             continue

@@ -91,7 +91,9 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 
 ### TODO 
 - [ ] Speed Enhancement for Summation/Multiplication of Two Sequences
-- [ ] Fuzzy Matching - Implement GAP size control.
+- [ ] Fuzzy Matching II - Implement GAP size control.
+- [ ] Fuzzy Matching III.
+- [ ] Terms Lookup Formula - Dropping Terms.
 - [ ] Operation Design
 - [X] Fuzzy Matching
 - [X] Search by Terms with a Variable 
@@ -102,6 +104,6 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [X] Add Testing Unit
 - [ ] Change The Functions Structure - Refactoring
 - [X] Input Validation 
-- [ ] Sequence Input Enhancement 
+- [x] Sequence Input Enhancement 
 - [ ] Le Rabot - with extended version
 - [ ] Test on Windows
