@@ -6,6 +6,7 @@ def echo_main():
     print("[+] 3. Fuzzy Matching.")
     print("[+] 4. Search by Terms Lookup Formula.")
     print("[+] 5. Advanced Search")
+    print("[+] 0. View Sequence")
     pass
 
 
@@ -57,19 +58,6 @@ def echo_syntax():
     print("---> 1, ?*, 18, 13 ---> Any number of terms between 1 and 100")
     print("---> 1, 2-5, 10-15 ---> The second term between 2 and 5, the third between 5 and 10")
     pass
-
-
-def get_sequence_name(sequence: str):
-    return sequence[0:sequence.find(',')].strip()
-
-
-def print_ret(returned_list: list):
-    if len(returned_list) == 0:
-        print("[!] Could not find any results!")
-    else:
-        for i in range(0, len(returned_list)):
-            print(get_sequence_name(returned_list[i]))
-            # print(returned_list[i])
 
 
 def is_all_terms_are_fixed_numbers(sequence: str):

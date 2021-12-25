@@ -162,6 +162,6 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [X] Sequence Input Enhancement 
 - [X] Le Rabot - with extended version - Won't be done (Can be accomplished via Operation Design)
 - [ ] Test on Windows
-- [ ] View Sequence
+- [X] View Sequence
 - [ ] Enhance Fuzzy Matching - Values Shifting 
 - [ ] Searching without Order - Dropping Terms.

@@ -4,6 +4,7 @@ This code contains a set of functions that will be used in the OEIS Search Engin
 import re
 
 
+
 def convert_str_to_list(sequence: str, is_ordered_sequence: bool = True, is_first_term_seq_name: bool = True):
     """
     sequence: A string that contains a comma seperated numbers
@@ -11,6 +12,8 @@ def convert_str_to_list(sequence: str, is_ordered_sequence: bool = True, is_firs
     return: A list of integers in a list (String ---> List)
     """
     terms_split: list
+    sequence = sequence.strip().strip(",")
+
     if is_ordered_sequence:
         terms_split = sequence.split(",")
     else:
@@ -18,7 +21,6 @@ def convert_str_to_list(sequence: str, is_ordered_sequence: bool = True, is_firs
 
     if is_first_term_seq_name:
         del terms_split[0]  # Delete the name of the sequence
-        del terms_split[-1]  # Delete the new line
 
     int_list: list = [0] * (len(terms_split))
     for idx in range(0, len(terms_split)):

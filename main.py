@@ -18,6 +18,7 @@ _MAXIMUM_GAP_SIZE = "[-] Enter your maximum gap size: "
 ########################################################################################################################
 _YOUR_CHOICE = "[-] Your choice: "
 _ENTER_YOUR_SEQ = "[-] Enter your sequence (comma seperated): "
+_ENTER_YOUR_SEQ_NAME = "[-] Enter the sequence number: "
 ########################################################################################################################
 _SHOULD_NOT_CONTAINS_PATTERN = "[!] The sequence should not contain anything but numbers!\n[#]"
 _MUST_CONTAIN_ONE_FIXED_NUMBER_AT_LEAST = "[!] The sequence should contain one number at least!\n[#]"
@@ -31,6 +32,14 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
+def print_ret(returned_list: list):
+    if len(returned_list) == 0:
+        print("[!] Could not find any results!")
+    else:
+        for i in range(0, len(returned_list)):
+            print(search_engine.get_sequence_name(returned_list[i]))
+
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     old_sequence = ''
@@ -38,11 +47,18 @@ if __name__ == "__main__":
     while True:
         echo_main()
         choice = input(_YOUR_CHOICE).strip()
-        if not choice.isdigit() or (int(choice) < 1 or int(choice) > 5):
+        if not choice.isdigit() or (int(choice) < 0 or int(choice) > 5):
             print(_CANT_IDENTIFY_THE_CHOICE)
             continue
 
-
+        if choice == '0':
+            seq_number = input(_ENTER_YOUR_SEQ_NAME)
+            seq_number = int(seq_number.strip("A"))
+            print("[#]")
+            print(search_engine.get_sequence_name_by_number(seq_number))
+            print(search_engine.get_sequence_terms_by_number(seq_number))
+            print("[#]")
+            continue
         if choice == '4':
             terms_lookup_formula = input(_TERMS_LOOKUP_FORMULA)
             ret = search_engine.formula_lookup(terms_lookup_formula)
@@ -51,7 +67,7 @@ if __name__ == "__main__":
             if len(matched_sequences) > 0:
                 print("Sequence @ Index of Term that has Matched")
             for i in range(len(matched_sequences)):
-                print(get_sequence_name(matched_sequences[i]) + " @ " + str(matched_term_index[i]))
+                print(search_engine.get_sequence_name(matched_sequences[i]) + " @ " + str(matched_term_index[i]))
             continue
 
 
@@ -62,7 +78,7 @@ if __name__ == "__main__":
             echo_advanced()
 
 
-        # Sequence Input and Validation
+        # Sequence Input and Checking
         seq_input = input(_ENTER_YOUR_SEQ).replace(";", ",")
         if seq_input.strip() == '':
             seq_input = old_sequence
@@ -87,7 +103,7 @@ if __name__ == "__main__":
             continue
 
 
-        # Evaluate Based on Input
+        # Evaluate Search Criteria Based on Input
         if choice == '1':
             ret = search_engine.unordered_search(seq_input)
             print_ret(ret)
