@@ -9,6 +9,15 @@ def echo_main():
     pass
 
 
+def echo_fuzzy_matching():
+    print("---> Fuzzy Matching (I): "
+          "Only one term is allowed to be dropped at a time from OEIS and/or the input sequence.")
+    print("---> Fuzzy Matching (II): "
+          "A specific number of terms are allowed to be dropped at a time from OEIS and/or the input sequence.")
+    print("---> Fuzzy Matching (III): " 
+          "Dropping any terms from the OEIS sequence, but specific number of terms from the input sequence.")
+
+
 def echo_advanced():
     print("[+] 1. Shift The Sequence with Constant and Search")
     print("[+] 2. Scale The Sequence with Constant and Search")

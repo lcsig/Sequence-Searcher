@@ -14,6 +14,8 @@ _PRIME_END_POINT = "[-] The ending point of primes sequence: "
 _TOLERANCE_VALUE = "[-] Tolerance Value (Each term will have a tolerance of +- the entered value): "
 _NUMBER_OF_ALLOWED_DROP = "[-] Number of allowed terms to be dropped: "
 _TERMS_LOOKUP_FORMULA = "[-] Enter your terms lookup formula using only 'n' (E.g., n / 5, n, n * 10, n * 10 + 125): "
+_MAXIMUM_GAP_SIZE = "[-] Enter your maximum gap size: "
+_MAX_GAP_SIZE_BIGGER_THAN_ALLOWED_TERM = "[!] The gap size is bigger than the number of terms that can be dropped"
 ########################################################################################################################
 _YOUR_CHOICE = "[-] Your choice: "
 _ENTER_YOUR_SEQ = "[-] Enter your sequence (comma seperated): "
@@ -90,9 +92,24 @@ if __name__ == "__main__":
             print_ret(ret)
 
         elif choice == '3':
+            echo_fuzzy_matching()
+            choice = input(_YOUR_CHOICE).strip()
             allowed_drop = int(input(_NUMBER_OF_ALLOWED_DROP))
-            ret = search_engine.fuzzy_match(seq_input, allowed_drop)
 
+            if choice.upper() == "I" or choice == "1":
+                ret = search_engine.fuzzy_match_type1(seq_input, allowed_drop)
+            elif choice.upper() == "II" or choice == "2":
+                max_gap_size = int(input(_MAXIMUM_GAP_SIZE))
+                if max_gap_size > allowed_drop:
+                    print(_MAX_GAP_SIZE_BIGGER_THAN_ALLOWED_TERM)
+                    continue
+                ret = search_engine.fuzzy_match_type2(seq_input, allowed_drop, max_gap_size)
+            elif choice.upper() == "III" or choice == "3":
+                continue
+            else:
+                continue
+
+            print("[#]")
             for i in range(allowed_drop, -1, -1):
                 if i in ret.keys():
                     print("[+] Rank: " + str(i))
