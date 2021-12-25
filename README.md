@@ -13,6 +13,7 @@ The search features are divided into the following sections:
 It gives you the capability to search about a set of numbers in the sequence: 
 * `1, 2, 3, 4`: Any sequence contains these four terms without considering order will match (E.g., A185577, 1, 5, 2, 1, 2, 7, 5, 1, 3, 8, 6, 4) 
 
+
 ### 2. Search with Keys 
 ###### Normal Search Considering Terms Order
 * `1, 2, 3, 4`: Sequence contains these four terms in the same order anywhere in the sequence.
@@ -26,9 +27,55 @@ It gives you the capability to search about a set of numbers in the sequence:
 * `1--4, 5, ?1, 13, 20--30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
 Note: The search process will show results anywhere in the sequence, i.e. it is not limited to the beginning of the sequence. 
 
+
 ### 3. Fuzzy Matching 
 This algorithm allows terms in the sequence to be off by one or two, and it would still match.
-Also, the results will be ranked according to the number of the dropped terms.
+Also, the results will be ranked according to the number of the dropped terms. There are three types of fuzzy matching: 
+
+#### Fuzzy Matching I 
+In this type, one term can be dropped at a time from either the OEIS sequence or/and the input sequence. 
+You can specify the number of terms that can be dropped. 
+
+Example:
+```
+OEIS Sequence A40: 2, 3,    5, 7, 11,     13, 17, 19,     23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103
+Input Sequence   : 2, 3, 4, 5, 7, 11, 11, 13, 17, 19, 21, 23, 29, 31,     41, 43, 47,     59, 61, 67, 71, 73, 79, 83, 89
+Number of Terms Allowed For Drop: 7
+Both Sequences will match. 
+Rank = Number of Terms Allowed For Drop - The Number of Terms that had Been Dropped = 7 - 5 = 2.
+```
+
+#### Fuzzy Matching II
+In this algorithm, more than one term can be dropped at a time from either the OEIS sequence or/and the input sequence. 
+You can specify the number of terms that can be dropped and the maximum gap size that is allowed to be skipped while comparing the sequences.  
+
+Note: If there is a terms skip in BOTH sequences, the smallest number of terms will be considered to be subtracted from the terms that are allowed to be dropped. For example:
+```
+Seq1: 1, 2, 3, 4, 5, 100, 101, 102, 6, 7, 8, 9, 10
+Seq2: 1, 2, 3, 4, 5, 100, 101, 102, 103, 104, 6, 7, 8, 9, 10
+Number of Terms Allowed For Drop: 6
+Maximum Gap Size: 6
+The number of terms that will be subtracted from the terms allowed to be dropped is 3 and not 5.
+Rank = Number of Terms Allowed For Drop - The Number of Terms that had Been Dropped = 6 - 3 = 3.
+```
+
+#### Fuzzy Matching III 
+In this method, any number of terms is allowed for dropping from the OEIS sequence, 
+but a specific number of terms from the input sequence. 
+
+In other words, this type can be used to check the existence of the input sequence terms in the same order in other 
+sequences while allowing some terms to be off.
+
+For example, it could be useful when the sequence is the terms of another sequence according to 
+specific indexing rule (like, k^2 + k + 1) 
+``` 
+Input Sequence: 5, 41, 269, 1093, 3299, 7867, 16319
+Number of terms allowed to be dropped: 0
+
+The output will be A054553 and A122566 (Until Dec 25)
+The input sequence is actually A122566(k^2 + k + 1)
+```
+
 
 ### 4. Searching using Terms Lookup Formula
 This method allows you to match sequences in the database to formula or terms with a variable
@@ -39,6 +86,7 @@ The supported operations are:
 2. Sin, Cos, Tan and Exp (e^number).
 3. Round, fix or trunc, abs, floor and ceil.
 4. Constants: PI and E.
+
 
 ### 5. Advanced Search Queries
 1. Shift The Sequence with Constant and Search
@@ -83,6 +131,9 @@ and you have to download it from the official website before using this project:
 7. Note: The script was only tested on Linux using Python 3.8.10
 
 # Notes
+Disclaimer: This project is under developing and testing, 
+and it may contain bugs which could affect the validity of the results! 
+
 ### Special Thanks 
 * Dr. Neil J. Sloane for his suggestions of Fuzzy Matching and Searching by Terms Lookup Formula. 
 
@@ -92,7 +143,7 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 ### TODO 
 - [ ] Speed Enhancement for Summation/Multiplication of Two Sequences
 - [X] Fuzzy Matching II - Implement GAP size control.
-- [ ] Fuzzy Matching III.
+- [X] Fuzzy Matching III.
 - [ ] Terms Lookup Formula - Dropping Terms.
 - [ ] Operation Design
 - [X] Fuzzy Matching

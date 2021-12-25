@@ -12,7 +12,7 @@ _MAX_LEVEL_VALUE = "[-] Enter the maximum level (Levels from 1 to the maximum le
 _PRIME_START_POINT = "[-] The starting point of primes sequence: "
 _PRIME_END_POINT = "[-] The ending point of primes sequence: "
 _TOLERANCE_VALUE = "[-] Tolerance Value (Each term will have a tolerance of +- the entered value): "
-_NUMBER_OF_ALLOWED_DROP = "[-] Number of allowed terms to be dropped: "
+_NUMBER_OF_ALLOWED_DROP = "[-] Number of terms allowed to be dropped: "
 _TERMS_LOOKUP_FORMULA = "[-] Enter your terms lookup formula using only 'n' (E.g., n / 5, n, n * 10, n * 10 + 125): "
 _MAXIMUM_GAP_SIZE = "[-] Enter your maximum gap size: "
 ########################################################################################################################
@@ -112,7 +112,7 @@ if __name__ == "__main__":
                     continue
                 ret = search_engine.fuzzy_match_type2(seq_input, allowed_drop, max_gap_size)
             elif choice.upper() == "III" or choice == "3":
-                continue
+                ret = search_engine.fuzzy_match_type3(seq_input, allowed_drop)
             else:
                 continue
 
