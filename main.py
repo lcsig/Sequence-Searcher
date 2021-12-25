@@ -15,7 +15,6 @@ _TOLERANCE_VALUE = "[-] Tolerance Value (Each term will have a tolerance of +- t
 _NUMBER_OF_ALLOWED_DROP = "[-] Number of allowed terms to be dropped: "
 _TERMS_LOOKUP_FORMULA = "[-] Enter your terms lookup formula using only 'n' (E.g., n / 5, n, n * 10, n * 10 + 125): "
 _MAXIMUM_GAP_SIZE = "[-] Enter your maximum gap size: "
-_MAX_GAP_SIZE_BIGGER_THAN_ALLOWED_TERM = "[!] The gap size is bigger than the number of terms that can be dropped"
 ########################################################################################################################
 _YOUR_CHOICE = "[-] Your choice: "
 _ENTER_YOUR_SEQ = "[-] Enter your sequence (comma seperated): "
@@ -24,6 +23,7 @@ _SHOULD_NOT_CONTAINS_PATTERN = "[!] The sequence should not contain anything but
 _MUST_CONTAIN_ONE_FIXED_NUMBER_AT_LEAST = "[!] The sequence should contain one number at least!\n[#]"
 _CANT_IDENTIFY_THE_SEQUENCE = '[!] Please, enter the sequence again.\n[#]'
 _CANT_IDENTIFY_THE_CHOICE = '[!] Please, enter your choice again.\n[#]'
+_MAX_GAP_SIZE_BIGGER_THAN_ALLOWED_TERM = "[!] The gap size is bigger than the number of terms that can be dropped.\n[#]"
 
 
 def signal_handler(sig, frame):
@@ -42,6 +42,7 @@ if __name__ == "__main__":
             print(_CANT_IDENTIFY_THE_CHOICE)
             continue
 
+
         if choice == '4':
             terms_lookup_formula = input(_TERMS_LOOKUP_FORMULA)
             ret = search_engine.formula_lookup(terms_lookup_formula)
@@ -53,11 +54,13 @@ if __name__ == "__main__":
                 print(get_sequence_name(matched_sequences[i]) + " @ " + str(matched_term_index[i]))
             continue
 
+
         # Echo Based on Input
         if choice == '2':
             echo_syntax()
         elif choice == '5':
             echo_advanced()
+
 
         # Sequence Input and Validation
         seq_input = input(_ENTER_YOUR_SEQ).replace(";", ",")
@@ -73,6 +76,7 @@ if __name__ == "__main__":
             print("[+] Seq: " + seq_input)
         old_sequence = seq_input
 
+
         # Validate Input Based on Choice
         if (choice == '1' or choice == '3' or choice == '5') and not is_all_terms_are_fixed_numbers(seq_input):
             print(_SHOULD_NOT_CONTAINS_PATTERN)
@@ -82,14 +86,17 @@ if __name__ == "__main__":
             print(_MUST_CONTAIN_ONE_FIXED_NUMBER_AT_LEAST)
             continue
 
+
         # Evaluate Based on Input
         if choice == '1':
             ret = search_engine.unordered_search(seq_input)
             print_ret(ret)
 
+
         elif choice == '2':
             ret = search_engine.ordered_search(seq_input)
             print_ret(ret)
+
 
         elif choice == '3':
             echo_fuzzy_matching()
@@ -116,6 +123,7 @@ if __name__ == "__main__":
                     print_ret(ret[i])
                 else:
                     print("[+] No matches for rank " + str(i))
+
 
         elif choice == '5':
             choice = input(_YOUR_CHOICE)

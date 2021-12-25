@@ -83,19 +83,21 @@ def list_a_in_b(a: list, b: list):
                     break
             if contains_flag:
                 return True
+                return True
+                return True
 
         return False
 
 
 def print_percentage_line(index: int, perc: float):
     if index % 4 == 0:
-        print("[#]> [//] ---> (" + str(perc) + "%)", end='\r')
+        print(f"[#]> [//] ---> ({perc:0.2f}%)", end='\r')
     elif index % 4 == 1:
-        print("[#]> [--] ---> (" + str(perc) + "%)", end='\r')
+        print(f"[#]> [--] ---> ({perc:0.2f}%)", end='\r')
     elif index % 4 == 2:
-        print("[#]> [\\\\] ---> (" + str(perc) + "%)", end='\r')
+        print(f"[#]> [\\\\] ---> ({perc:0.2f}%)", end='\r')
     elif index % 4 == 3:
-        print("[#]> [||] ---> (" + str(perc) + "%)", end='\r')
+        print(f"[#]> [||] ---> ({perc:0.2f}%)", end='\r')
 
 
 def waiting(completed: int, over_all: int):
