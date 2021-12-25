@@ -50,7 +50,7 @@ def print_ranked_results(returned_values: dict, terms_allowed_dropped: int):
 
 
 def clear_input(seq: str):
-    seq = seq.replace(";", ",").replace(":", ",")
+    seq = seq.replace(";", ",")
     if "," in seq:
         seq = seq.replace(" ", "").strip().strip(",")
         seq = ','.join(list(filter(None, seq.split(",")))).strip().strip(",")

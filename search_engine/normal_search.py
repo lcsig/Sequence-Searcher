@@ -20,7 +20,7 @@ def parse_pattern(seq: str):
     # Replace with Regex
     terms = seq.split(",")
     for idx in range(0, len(terms)):
-        if "--" in terms[idx]:
+        if ":" in terms[idx]:
             terms[idx] = _RE1
         elif "?*" in terms[idx]:
             terms[idx] = _RE2
@@ -81,8 +81,8 @@ def is_seq_valid(seq_pattern: str, probable_seq: str):
             else:
                 return False
 
-        elif "--" in x[i]:
-            k = x[i].strip().split("--")
+        elif ":" in x[i]:
+            k = x[i].strip().split(":")
             first_num = int(k[0])
             second_num = int(k[1])
             val = int(y[idx])

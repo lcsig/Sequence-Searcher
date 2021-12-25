@@ -37,7 +37,7 @@ def is_pattern_exist(seq: str):
     """
     pattern_exist = False
     pattern_exist = pattern_exist or ("?" in seq)
-    pattern_exist = pattern_exist or ("--" in seq)
+    pattern_exist = pattern_exist or (":" in seq)
     return pattern_exist
 
 

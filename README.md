@@ -23,8 +23,8 @@ Also, you can specify a number of terms to dropped if they are not found in the 
 * `1, 5, ?*, 13, 20`: Any possible set of numbers between the two sequences [1, 5] and [13, 20].
 * `1, 5, ?*, 13, 20, ?3, 60, 70`: Any possible set of numbers between the two sequences [1, 5] and [13, 20], and three numbers between [13, 20] and [60, 70].
 ###### Range 
-* `1, 5, ?1, 13, 20--23`: The third term could be any number, the fifth is between 20 and 23.
-* `1--4, 5, ?1, 13, 20--30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
+* `1, 5, ?1, 13, 20:23`: The third term could be any number, the fifth is between 20 and 23.
+* `1:4, 5, ?1, 13, 20:30`: The first term could be 1, 2, 3 or 4. Also, The third term could be any number, the fifth is between 20 and 23.
 Note: The search process will show results anywhere in the sequence, i.e. it is not limited to the beginning of the sequence. 
 
 

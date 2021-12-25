@@ -56,7 +56,7 @@ def echo_syntax():
     print("[+] Reminder:")
     print("---> 1, ?3, 5, 7   ---> The second, third and forth sequences could be anything")
     print("---> 1, ?*, 18, 13 ---> Any number of terms between 1 and 100")
-    print("---> 1, 2-5, 10-15 ---> The second term between 2 and 5, the third between 5 and 10")
+    print("---> 1, 2--5, 10--15 ---> The second term between 2 and 5, the third between 5 and 10")
     pass
 
 
