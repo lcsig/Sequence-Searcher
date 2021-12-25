@@ -10,9 +10,9 @@ The OEIS database is searchable by keyword and by subsequence and this project p
 The search features are divided into the following sections:
 
 ### 1. Search without Order
-It gives you the capability to search about a set of numbers in the sequence: 
+It gives you the capability to search about a set of numbers in the sequence.
+Also, you can specify a number of terms to dropped if they are not found in the sequence.  
 * `1, 2, 3, 4`: Any sequence contains these four terms without considering order will match (E.g., A185577, 1, 5, 2, 1, 2, 7, 5, 1, 3, 8, 6, 4) 
-
 
 ### 2. Search with Keys 
 ###### Normal Search Considering Terms Order
@@ -164,4 +164,4 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [ ] Test on Windows
 - [X] View Sequence
 - [ ] Enhance Fuzzy Matching - Values Shifting 
-- [ ] Searching without Order - Dropping Terms.
+- [X] Searching without Order - Dropping Terms.

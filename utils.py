@@ -1,8 +1,8 @@
 
 
 def echo_main():
-    print("[+] 1. Search about set of numbers in a sequence.")
-    print("[+] 2. Search about a sequence.")
+    print("[+] 1. Search About Set of Numbers.")
+    print("[+] 2. Search About Sequence.")
     print("[+] 3. Fuzzy Matching.")
     print("[+] 4. Search by Terms Lookup Formula.")
     print("[+] 5. Advanced Search")

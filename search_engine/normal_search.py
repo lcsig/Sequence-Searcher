@@ -1,7 +1,7 @@
 import re
 import search_engine.utils as utils
-
-
+from search_engine import convert_str_to_list
+from search_engine import seq_list_numeric
 from search_engine import seq_list
 
 
@@ -38,30 +38,30 @@ def parse_pattern(seq: str):
     return seq_returned
 
 
-def unordered_search(seq: str):
+def unordered_search(numbers_set: str, max_off_terms: int):
     """
-    Search about the terms in seq
+    Search about set of numbers in OEIS sequences without considering the input numbers order
+    numbers_set: The sequence or set of numbers that will be searched about
+    max_off_terms: The number of terms allowed to be dropped
+    returns: A dictionary where the value represents the rank of match, and the dictionary value represents the sequence
     """
-    seq_returned: list = []
-    terms: list
+    seq = convert_str_to_list(numbers_set, True, False)
+    return_dic = {}
 
-    # Clear the terms from spaces and add comma on both sides
-    seq = seq.replace(" ", "")
-    terms = seq.split(",")
-    for i in range(0, len(terms)):
-        terms[i] = "," + terms[i] + ","
+    for i in range(len(seq_list_numeric)):
+        exist_in_oeis = True
+        dropped_terms = max_off_terms
 
-    # Search about terms
-    for i in range(0, len(seq_list)):
-        terms_in_seq = True
-        for d in range(0, len(terms)):
-            if not terms[d] in seq_list[i]:
-                terms_in_seq = False
+        for n in range(len(seq)):
+            if seq[n] not in seq_list_numeric[i]:
+                dropped_terms -= 1
+            if dropped_terms < 0:
+                exist_in_oeis = False
                 break
-        if terms_in_seq:
-            seq_returned.append(seq_list[i])
+        if exist_in_oeis:
+            return_dic.setdefault(dropped_terms, []).append(seq_list[i])
 
-    return seq_returned
+    return return_dic
 
 
 def is_seq_valid(seq_pattern: str, probable_seq: str):
