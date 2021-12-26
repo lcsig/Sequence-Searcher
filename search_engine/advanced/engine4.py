@@ -49,7 +49,7 @@ def adv_search_find_similar(seq: str, tolerance_value: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        if list_a_in_b_similar(numeric_seq, seq_list_numeric[i], tolerance_value):
+        if list_a_in_b_similar(numeric_seq, list(seq_list_numeric[i]), tolerance_value):
             result_list.append(get_sequence_name(seq_list[i]))
 
         utils.waiting(i, len(seq_list_numeric))
@@ -97,7 +97,7 @@ def adv_search_summation_of_two_seq(seq: str):
     seq_len = len(seq_list_numeric)
     for i in range(0, seq_len):
         for n in range(i + 1, seq_len):
-            seq_result = utils_calc.add_sequences(seq_list_numeric[i], seq_list_numeric[n])
+            seq_result = utils_calc.add_sequences(list(seq_list_numeric[i]), list(seq_list_numeric[n]))
             if utils.list_a_in_b(numeric_seq, seq_result):
                 result_list.append([get_sequence_name(seq_list[i]), get_sequence_name(seq_list[n])])
 
@@ -123,7 +123,7 @@ def adv_search_product_of_two_seq(seq: str):
     result_list = []
     for i in range(0, len(seq_list_numeric)):
         for n in range(i + 1, len(seq_list_numeric)):
-            seq_result = utils_calc.multiply_sequences(seq_list_numeric[i], seq_list_numeric[n])
+            seq_result = utils_calc.multiply_sequences(list(seq_list_numeric[i]), list(seq_list_numeric[n]))
             if utils.list_a_in_b(numeric_seq, seq_result):
                 result_list.append([get_sequence_name(seq_list[i]), get_sequence_name(seq_list[n])])
 

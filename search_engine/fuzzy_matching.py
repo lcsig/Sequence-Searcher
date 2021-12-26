@@ -59,7 +59,7 @@ def fuzzy_match_type1(num_list: str, max_off_terms: int):
     return_dic = {}
 
     for i in range(len(seq_list_numeric)):
-        seq1 = seq_list_numeric[i]
+        seq1 = list(seq_list_numeric[i])
         # if str(seq_list[i]).startswith('A348440'):
         #     print("debug")
         dropped_terms = []
@@ -147,7 +147,7 @@ def fuzzy_match_type2(num_list: str, max_off_terms: int, max_gap_size: int):
     return_dic = {}
 
     for i in range(len(seq_list_numeric)):
-        seq1 = seq_list_numeric[i]
+        seq1 = list(seq_list_numeric[i])
         # if str(seq_list[i]).startswith('A333516'):
         #    print("debug")
         dropped_terms = []
@@ -209,7 +209,7 @@ def fuzzy_match_type3(num_list: str, max_off_terms: int):
     return_dic = {}
 
     for i in range(len(seq_list_numeric)):
-        seq1 = seq_list_numeric[i]
+        seq1 = list(seq_list_numeric[i])
         # if str(seq_list[i]).startswith('A000027'):
         #    print("debug")
         dropped_terms = []

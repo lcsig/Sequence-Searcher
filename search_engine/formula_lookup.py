@@ -97,7 +97,7 @@ def formula_lookup_linear_search(exp_input: str, range_list):
 
     # Iterate over sequences
     for i in range_list:
-        seq = seq_list_numeric[i]
+        seq = list(seq_list_numeric[i])
         with lock:
             progress.value += 1
 

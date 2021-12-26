@@ -110,9 +110,22 @@ The supported operations are:
 19. Check if The Input is a Product of Adjacent Terms of a Sequence in The Database
 20. Check if The Input is a Cumulative Sum of a Sequence in The Database
 21. Check if The Input is a Cumulative Product of a Sequence in The Database
-22. Design your own operation ... (To be added)
 
 
+### 6. Operation Design
+This is a framework that gives you the capability to write a python code that can represent a transformation on the OEIS database or the input sequence. 
+Also, it allows you to compare/filter the sequences according to your logic. 
+
+Steps: 
+1. Open the `operation.py` python which contains three functions (oeis_transform, input_transform and filter_fun).
+2. oeis_transform: This function will receive all sequences from the database, you need to write your own transformation in this function and return the transformed sequence.
+3. input_transform: This function will receive the input sequence. A transformation on the input sequence should be written here. 
+4. filter_fun: This function is responsible for the filtering criteria, it will receive both the transformed OEIS sequence and the transformed input sequence.
+    The function now is implemented to check if the input sequence is exist in the OEIS sequence.
+5. The current implementation in the `operation.py` will work as an ordinary search engine with normal results! 
+6. Note: There is no need to restart the program after you edit the `operation.py` file.
+7. After you edit the `operation.py` file as needed, run the script and choose the operation design option. 
+8. Results will be filtered and printed automatically.
 
 # OEIS Database and Instructions
 The database that is used in this project is part of the intellectual property of 
@@ -144,8 +157,8 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [ ] Speed Enhancement for Summation/Multiplication of Two Sequences
 - [X] Fuzzy Matching II - Implement GAP size control.
 - [X] Fuzzy Matching III.
-- [ ] Terms Lookup Formula - Dropping Terms.
-- [ ] Operation Design
+- [ ] Terms Lookup Formula - Dropping/Skipping Terms.
+- [X] Operation Design
 - [X] Fuzzy Matching
 - [X] Search by Terms with a Variable 
 - [X] Terms Lookup Formula Speed Enhancement

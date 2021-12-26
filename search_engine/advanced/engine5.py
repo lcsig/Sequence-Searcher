@@ -37,7 +37,7 @@ def adv_search_differences(seq: str, max_diff_level: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        seq_result = utils_calc.seq_adjacent_terms_diff(seq_list_numeric[i], max_diff_level)
+        seq_result = utils_calc.seq_adjacent_terms_diff(list(seq_list_numeric[i]), max_diff_level)
 
         for diff_level in range(max_diff_level):
             if utils.list_a_in_b(numeric_seq, seq_result[diff_level]):
@@ -59,7 +59,7 @@ def adv_search_sums(seq: str, max_sum_level: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        seq_result = utils_calc.seq_adjacent_terms_sum(seq_list_numeric[i], max_sum_level)
+        seq_result = utils_calc.seq_adjacent_terms_sum(list(seq_list_numeric[i]), max_sum_level)
 
         for sum_level in range(max_sum_level):
             if utils.list_a_in_b(numeric_seq, seq_result[sum_level]):
@@ -81,7 +81,7 @@ def adv_search_products(seq: str, max_product_level: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        seq_result = utils_calc.seq_adjacent_terms_prod(seq_list_numeric[i], max_product_level)
+        seq_result = utils_calc.seq_adjacent_terms_prod(list(seq_list_numeric[i]), max_product_level)
 
         for prod_level in range(max_product_level):
             if utils.list_a_in_b(numeric_seq, seq_result[prod_level]):
@@ -103,7 +103,7 @@ def adv_search_cumulative_sum(seq: str, max_cumsum_level: int):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        seq_result = utils_calc.seq_cumulative_sum(seq_list_numeric[i], max_cumsum_level)
+        seq_result = utils_calc.seq_cumulative_sum(list(seq_list_numeric[i]), max_cumsum_level)
 
         for sum_level in range(max_cumsum_level):
             if utils.list_a_in_b(numeric_seq, seq_result[sum_level]):
@@ -125,7 +125,7 @@ def adv_search_cumulative_product(seq: str, maximum_prod_level):
 
     result_list = []
     for i in range(0, len(seq_list_numeric)):
-        seq_result = utils_calc.seq_cumulative_product(seq_list_numeric[i], maximum_prod_level)
+        seq_result = utils_calc.seq_cumulative_product(list(seq_list_numeric[i]), maximum_prod_level)
 
         for prod_level in range(maximum_prod_level):
             if utils.list_a_in_b(numeric_seq, seq_result[prod_level]):

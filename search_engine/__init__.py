@@ -84,6 +84,7 @@ print("[#]")
 from .fuzzy_matching import *
 from .formula_lookup import *
 from .normal_search import *
+from .operation_design import *
 
 from .advanced.engine1 import *
 from .advanced.engine2 import *

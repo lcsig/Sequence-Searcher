@@ -1,9 +1,12 @@
 #!/bin/env python3
-
-import search_engine
-from utils import *
+import importlib
 import signal
 import sys
+
+import operation
+import search_engine
+from utils import *
+
 
 ########################################################################################################################
 _MAX_SHIFT_VALUE_N_TO_N = "[-] Maximum constant value (Values from -constant to +constant will be applied): "
@@ -16,15 +19,19 @@ _NUMBER_OF_ALLOWED_DROP = "[-] Number of terms allowed to be dropped: "
 _TERMS_LOOKUP_FORMULA = "[-] Enter your terms lookup formula using only 'n' (E.g., n / 5, n, n * 10, n * 10 + 125): "
 _MAXIMUM_GAP_SIZE = "[-] Enter your maximum gap size: "
 ########################################################################################################################
+_SEP = "[#]"
 _YOUR_CHOICE = "[-] Your choice: "
 _ENTER_YOUR_SEQ = "[-] Enter your sequence (Comma Seperated - Enter to use the last input): "
 _ENTER_YOUR_SEQ_NAME = "[-] Enter the sequence number: "
+_SEQ_AT_INDEX = "Sequence @ Index of Term that has Matched"
 ########################################################################################################################
 _SHOULD_NOT_CONTAINS_PATTERN = "[!] The sequence should not contain anything but numbers!\n[#]"
 _MUST_CONTAIN_ONE_FIXED_NUMBER_AT_LEAST = "[!] The sequence should contain one number at least!\n[#]"
 _CANT_IDENTIFY_THE_SEQUENCE = '[!] Please, enter the sequence again.\n[#]'
 _CANT_IDENTIFY_THE_CHOICE = '[!] Please, enter your choice again.\n[#]'
 _MAX_GAP_SIZE_BIGGER_THAN_ALLOWED_TERM = "[!] The gap size is bigger than the number of terms that can be dropped.\n[#]"
+_ERR_OCCURRED_TRY_EXCEPTION = "[!] An error occurred, probably your input was not valid!"
+########################################################################################################################
 
 
 def signal_handler(sig, frame):
@@ -57,6 +64,10 @@ def clear_input(seq: str):
     else:
         seq = ' '.join(seq.strip().split()).replace(" ", ",")
     return seq
+
+
+def sep():
+    print(_SEP)
 
 
 def advanced_search():
@@ -140,16 +151,16 @@ if __name__ == "__main__":
         try:
             echo_main()
             choice = input(_YOUR_CHOICE).strip()
-            if not choice.isdigit() or (int(choice) < 0 or int(choice) > 5):
+            if not choice.isdigit() or (int(choice) < 0 or int(choice) > 6):
                 print(_CANT_IDENTIFY_THE_CHOICE)
                 continue
             if choice == '0':
                 seq_number = input(_ENTER_YOUR_SEQ_NAME)
                 seq_number = int(seq_number.strip("A"))
-                print("[#]")
+                sep()
                 print(search_engine.get_sequence_name_by_number(seq_number))
                 print(search_engine.get_sequence_terms_by_number(seq_number))
-                print("[#]")
+                sep()
                 continue
 
 
@@ -173,11 +184,12 @@ if __name__ == "__main__":
 
 
             # Validate Input Based on Choice
-            if (choice == '1' or choice == '3' or choice == '5') and not is_all_terms_are_fixed_numbers(seq_input):
+            if (choice == '1' or choice == '3' or choice == '5' or choice == '6') \
+                    and not are_all_terms_fixed_numbers(seq_input):
                 print(_SHOULD_NOT_CONTAINS_PATTERN)
                 print(_CANT_IDENTIFY_THE_SEQUENCE)
                 continue
-            elif choice == '2' and not is_seq_contains_fixed_numbers(seq_input):
+            elif choice == '2' and not does_seq_contain_fixed_numbers(seq_input):
                 print(_MUST_CONTAIN_ONE_FIXED_NUMBER_AT_LEAST)
                 continue
             elif choice == '4' and ('n,' not in seq_input.lower() or ',n' not in seq_input.lower()):
@@ -189,17 +201,17 @@ if __name__ == "__main__":
             if choice == '1':
                 allowed_drop = int(input(_NUMBER_OF_ALLOWED_DROP))
                 ret = search_engine.unordered_search(seq_input, allowed_drop)
-                print("[#]")
+                sep()
                 print_ranked_results(ret, allowed_drop)
-                print("[#]")
+                sep()
                 continue
 
 
             elif choice == '2':
                 ret = search_engine.ordered_search(seq_input)
-                print("[#]")
+                sep()
                 print_results(ret)
-                print("[#]")
+                sep()
                 continue
 
 
@@ -221,9 +233,9 @@ if __name__ == "__main__":
                 else:
                     continue
 
-                print("[#]")
+                sep()
                 print_ranked_results(ret, allowed_drop)
-                print("[#]")
+                sep()
                 continue
 
 
@@ -232,16 +244,30 @@ if __name__ == "__main__":
                 matched_sequences, matched_term_index = list(ret.keys()), list(ret.values())
 
                 if len(matched_sequences) > 0:
-                    print("Sequence @ Index of Term that has Matched")
+                    print(_SEQ_AT_INDEX)
                 for i in range(len(matched_sequences)):
                     print(search_engine.get_sequence_name(matched_sequences[i]) + " @ " + str(matched_term_index[i]))
-                print("[#]")
+                sep()
                 continue
 
 
             elif choice == '5':
                 advanced_search()
-                print("[#]")
+                sep()
+                continue
+
+
+            elif choice == '6':
+                input("[-] Please, Edit The 'operation.py' File and Press Enter When You Ready ...")
+                importlib.invalidate_caches()
+                k = importlib.reload(operation)
+                ret = search_engine.operation_design(operation.oeis_transform,
+                                                     operation.input_transform,
+                                                     operation.filter_fun,
+                                                     seq_input)
+                sep()
+                print_results(ret)
+                sep()
                 continue
 
 
@@ -250,6 +276,6 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             signal_handler(None, None)
         except Exception as err:
-            print("[#]")
-            print("[!] An error occurred, probably your input was not valid!")
-            print("[#]")
+            sep()
+            print(_ERR_OCCURRED_TRY_EXCEPTION)
+            sep()

@@ -5,7 +5,8 @@ def echo_main():
     print("[+] 2. Search About Sequence.")
     print("[+] 3. Fuzzy Matching.")
     print("[+] 4. Search by Terms Lookup Formula.")
-    print("[+] 5. Advanced Search")
+    print("[+] 5. Advanced Search.")
+    print("[+] 6. Operation Design.")
     print("[+] 0. View Sequence")
     pass
 
@@ -46,9 +47,6 @@ def echo_advanced():
     print("[+] 19. Check if The Input is a Product of Adjacent Terms of a Sequence in The Database")
     print("[+] 20. Check if The Input is a Cumulative Sum of a Sequence in The Database")
     print("[+] 21. Check if The Input is a Cumulative Product of a Sequence in The Database")
-    ####################################################################################################################
-    print("[+] A. Operation Design on Input (To Be Added Later)")
-    print("[+] B. Operation Design on Database (To Be Added Later)")
     pass
 
 
@@ -60,7 +58,7 @@ def echo_syntax():
     pass
 
 
-def is_all_terms_are_fixed_numbers(sequence: str):
+def are_all_terms_fixed_numbers(sequence: str):
     """
     This method checks whither the sequence consists of numbers (i.e. no patterns)
     sequence: A string that contains a comma seperated numbers
@@ -73,7 +71,7 @@ def is_all_terms_are_fixed_numbers(sequence: str):
     return True
 
 
-def is_seq_contains_fixed_numbers(sequence: str):
+def does_seq_contain_fixed_numbers(sequence: str):
     """
     sequence: A string that contains a comma seperated numbers
     return: True if one of the terms is an integer, False if all terms are patterns

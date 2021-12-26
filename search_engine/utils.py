@@ -85,8 +85,6 @@ def list_a_in_b(a: list, b: list):
                     break
             if contains_flag:
                 return True
-                return True
-                return True
 
         return False
 
