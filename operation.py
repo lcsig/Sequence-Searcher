@@ -4,8 +4,6 @@ def oeis_transform(seq: list):
     """
     This function will receive an OEIS sequence, you should return the sequence after applying your transformation
     """
-    for i in range(len(seq)):
-        seq[i] = seq[i] + 1
     return seq
 
 

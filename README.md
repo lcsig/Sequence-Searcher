@@ -6,13 +6,13 @@ The OEIS database is searchable by keyword and by subsequence and this project p
 
 
 
-# Search Queries
+# Search Capabilities
 The search features are divided into the following sections:
 
 ### 1. Search without Order
 It gives you the capability to search about a set of numbers in the sequence.
 Also, you can specify a number of terms to dropped if they are not found in the sequence.  
-* `1, 2, 3, 4`: Any sequence contains these four terms without considering order will match (E.g., A185577, 1, 5, 2, 1, 2, 7, 5, 1, 3, 8, 6, 4) 
+* `1, 2, 3, 4`: Any sequence contains these four terms without considering order will match (E.g., `A185577, 1, 5, 2, 1, 2, 7, 5, 1, 3, 8, 6, 4`) 
 
 ### 2. Search with Keys 
 ###### Normal Search Considering Terms Order
@@ -29,8 +29,9 @@ Note: The search process will show results anywhere in the sequence, i.e. it is 
 
 
 ### 3. Fuzzy Matching 
-This algorithm allows terms in the sequence to be off by one or two, and it would still match.
-Also, the results will be ranked according to the number of the dropped terms. There are three types of fuzzy matching: 
+This algorithm allows terms in the sequence to be off by a specific number of terms. The results will be ranked according to the number of the dropped terms.
+
+The fuzzy matching has been enhanced to include: 
 
 #### Fuzzy Matching I 
 In this type, one term can be dropped at a time from either the OEIS sequence or/and the input sequence. 
@@ -60,8 +61,7 @@ Rank = Number of Terms Allowed For Drop - The Number of Terms that had Been Drop
 ```
 
 #### Fuzzy Matching III 
-In this method, any number of terms is allowed for dropping from the OEIS sequence, 
-but a specific number of terms from the input sequence. 
+In this method, any number of terms can be dropped from the OEIS sequence, but a specific number of terms from the input sequence. 
 
 In other words, this type can be used to check the existence of the input sequence terms in the same order in other 
 sequences while allowing some terms to be off.
@@ -127,6 +127,7 @@ Steps:
 7. After you edit the `operation.py` file as needed, run the script and choose the operation design option. 
 8. Results will be filtered and printed automatically.
 
+
 # OEIS Database and Instructions
 The database that is used in this project is part of the intellectual property of 
 [The Online Encyclopedia of Integer Sequences (OEIS)](https://oeis.org/),
@@ -144,8 +145,7 @@ and you have to download it from the official website before using this project:
 7. Note: The script was only tested on Linux using Python 3.8.10
 
 # Notes
-Disclaimer: This project is under developing and testing, 
-and it may contain bugs which could affect the validity of the results! 
+Disclaimer: This project is under developing and testing, and it may contain bugs which can affect the validity of the results! 
 
 ### Special Thanks 
 * Dr. Neil J. Sloane for his suggestions of Fuzzy Matching and Searching by Terms Lookup Formula. 
