@@ -12,6 +12,10 @@ sequences_names_map: dict
 sequences_terms_map: dict
 
 
+def is_windows():
+    return os.name == "nt"
+
+
 def get_sequence_name(sequence: str):
     return sequence[0:sequence.find(',')].strip()
 
@@ -37,9 +41,9 @@ def load_data():
 
     # Load Strings
     last_modified = ""
-    with open(os.path.join("data", "stripped")) as f:
+    with open(os.path.join("data", "stripped"), encoding='utf-8') as f:
         seq_list = f.readlines()
-    with open(os.path.join("data", "names")) as f:
+    with open(os.path.join("data", "names"), encoding='utf-8') as f:
         seq_list_names = f.readlines()
 
     # Delete Metadata
@@ -82,7 +86,10 @@ print("[#]")
 
 
 from .fuzzy_matching import *
-from .formula_lookup import *
+if not is_windows():
+    from .formula_lookup import *
+else:
+    from .formula_lookup_win import *
 from .normal_search import *
 from .operation_design import *
 
