@@ -148,7 +148,7 @@ def get_numbers_indices(oeis_seq: str, input_seq: str) -> str:
     input_seq = search_engine.convert_str_to_list(input_seq, True, False)
     indices = ""
     
-    last_index = 0
+    last_index = -1
     for i in range(len(input_seq)):
 
         indices_updated = False
@@ -164,7 +164,31 @@ def get_numbers_indices(oeis_seq: str, input_seq: str) -> str:
     return indices.strip().strip(",")
 
 
-def print_ranked_results_with_indices(returned_values: dict, terms_allowed_dropped: int, seq_input: str):
+def search_shift_with_constant(seq: str, max_constant: int):
+    """
+    Shift The Sequence and Search
+    seq: A string that contains a comma seperated numbers
+    max_constant: (1 to max_constant) each one of them will be added each time to the sequence
+    returns: nothing
+    """
+    numeric_seq = search_engine.convert_str_to_list(seq, True, False)
+    for i in range(-1 * max_constant, max_constant + 1):
+        # Calculate the Sequence
+        string_seq_shifted = [x + i for x in numeric_seq]
+        string_seq_shifted = ','.join(str(x) for x in string_seq_shifted)
+        returned_list = search_engine.ordered_search(string_seq_shifted)
+
+        if len(returned_list) > 0:
+            print(f"    Current Seq ({i}) ---> " + string_seq_shifted)
+            print(f"    Results ---> ", end='')
+            for d in range(0, len(returned_list)):
+                print(returned_list[d][0:returned_list[d].find(',')], end='')
+            print()
+
+
+def print_ranked_results_with_indices(returned_values: dict, terms_allowed_dropped: int, seq_input: str,
+                                      n_terms_from_indices_begin: int, search_about_n_terms_from_indices_end: int):
+
     for i in range(terms_allowed_dropped, -1, -1):
         if i in returned_values.keys():
             print("[+] Rank: " + str(i))
@@ -172,7 +196,13 @@ def print_ranked_results_with_indices(returned_values: dict, terms_allowed_dropp
             seq_list = returned_values[i]
             for n in range(0, len(seq_list)):
                 print(search_engine.get_sequence_name(seq_list[n]), end='')
-                print(" ---> " + get_numbers_indices(seq_list[n], seq_input))
+                indices = get_numbers_indices(seq_list[n], seq_input)
+                print(" ---> " + indices)
+
+                numeric_seq = search_engine.convert_str_to_list(indices, True, False)
+                if not (search_about_n_terms_from_indices_end == -1 or n_terms_from_indices_begin == -1):
+                    numeric_seq = numeric_seq[n_terms_from_indices_begin:search_about_n_terms_from_indices_end]
+                search_shift_with_constant(','.join(str(x) for x in numeric_seq), 2)
 
         else:
             print("[+] No matches for rank " + str(i))
@@ -265,14 +295,27 @@ if __name__ == "__main__":
                     ret = search_engine.fuzzy_match_type2(seq_input, allowed_drop, max_gap_size)
                 elif choice.upper() == "III" or choice == "3":
                     ret = search_engine.fuzzy_match_type3(seq_input, allowed_drop)
+
+                elif choice.upper() == "IV" or choice == "4":                       # Undocumented
+                    begin_indices = int(input("[+] Enter the first index for indices terms: "))
+                    end_indices = int(input("[+] Enter the end index for indices terms: "))
+
+                    for i in range(-2, 3):
+                        numeric_seq = search_engine.convert_str_to_list(seq_input, True, False)
+                        string_seq_shifted = [x + i for x in numeric_seq]
+                        string_seq_shifted = ','.join(str(x) for x in string_seq_shifted)
+
+                        print(f"[+] Search About (seq({i})): " + string_seq_shifted)
+                        ret = search_engine.fuzzy_match_type3(string_seq_shifted, 0)
+
+                        print_ranked_results_with_indices(ret, 0, string_seq_shifted, begin_indices, end_indices)
+
+                    continue
                 else:
                     continue
 
                 sep()
-                if choice.upper() == "III" or choice == "3":
-                    print_ranked_results_with_indices(ret, allowed_drop, seq_input)
-                else:
-                    print_ranked_results(ret, allowed_drop)
+                print_ranked_results(ret, allowed_drop)
                 sep()
                 continue
 
