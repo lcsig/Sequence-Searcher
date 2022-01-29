@@ -143,6 +143,41 @@ def advanced_search():
         search_engine.adv_search_cumulative_product(seq_input, int(range_param))
 
 
+def get_numbers_indices(oeis_seq: str, input_seq: str) -> str:
+    oeis_seq = search_engine.convert_str_to_list(oeis_seq, True, True)
+    input_seq = search_engine.convert_str_to_list(input_seq, True, False)
+    indices = ""
+    
+    last_index = 0
+    for i in range(len(input_seq)):
+
+        indices_updated = False
+        for n in range(last_index + 1, len(oeis_seq)):
+            if oeis_seq[n] == input_seq[i]:
+                indices += str(n) + ", "
+                last_index = n
+                indices_updated = True
+                break
+        if not indices_updated:
+            indices += "?1, "
+
+    return indices.strip().strip(",")
+
+
+def print_ranked_results_with_indices(returned_values: dict, terms_allowed_dropped: int, seq_input: str):
+    for i in range(terms_allowed_dropped, -1, -1):
+        if i in returned_values.keys():
+            print("[+] Rank: " + str(i))
+
+            seq_list = returned_values[i]
+            for n in range(0, len(seq_list)):
+                print(search_engine.get_sequence_name(seq_list[n]), end='')
+                print(" ---> " + get_numbers_indices(seq_list[n], seq_input))
+
+        else:
+            print("[+] No matches for rank " + str(i))
+
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     old_sequence = ''
@@ -234,7 +269,10 @@ if __name__ == "__main__":
                     continue
 
                 sep()
-                print_ranked_results(ret, allowed_drop)
+                if choice.upper() == "III" or choice == "3":
+                    print_ranked_results_with_indices(ret, allowed_drop, seq_input)
+                else:
+                    print_ranked_results(ret, allowed_drop)
                 sep()
                 continue
 
