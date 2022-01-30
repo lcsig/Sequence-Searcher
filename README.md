@@ -4,7 +4,7 @@ Sequence searcher is a project that aims to empower search abilities and enable 
 The OEIS database is searchable by keyword and by subsequence and this project provides more advanced options to search
     in the database (Not to be confused with the official [OEIS](https://oeis.org/) search engine).
 
-
+![Sequence_Searcher_Example](./img.gif)
 
 # Search Capabilities
 The search features are divided into the following sections:

@@ -2,6 +2,7 @@
 import importlib
 import signal
 import sys
+import urllib.request
 
 import operation
 import search_engine
@@ -143,6 +144,19 @@ def advanced_search():
         search_engine.adv_search_cumulative_product(seq_input, int(range_param))
 
 
+def does_sequence_have_formula(sequence_number: str) -> bool:
+    """
+    This function will return True if the 'formula' section is exist in OEIS website for a specific sequence
+    sequence_number: The sequence number (e.g. A0125)
+    """
+    oeis_url = f"https://oeis.org/{sequence_number}"
+
+    with urllib.request.urlopen(oeis_url) as url_data:
+        html_page = url_data.read().decode("utf8")
+
+    return "FORMULA" in html_page
+
+
 def get_numbers_indices(oeis_seq: str, input_seq: str) -> str:
     oeis_seq = search_engine.convert_str_to_list(oeis_seq, True, True)
     input_seq = search_engine.convert_str_to_list(input_seq, True, False)
@@ -195,14 +209,17 @@ def print_ranked_results_with_indices(returned_values: dict, terms_allowed_dropp
 
             seq_list = returned_values[i]
             for n in range(0, len(seq_list)):
-                print(search_engine.get_sequence_name(seq_list[n]), end='')
+                seq_name = search_engine.get_sequence_name(seq_list[n])
                 indices = get_numbers_indices(seq_list[n], seq_input)
-                print(" ---> " + indices)
+                print(f"{seq_name} --{'OK' if does_sequence_have_formula(seq_name) else '--'}--> " + indices)
 
                 numeric_seq = search_engine.convert_str_to_list(indices, True, False)
                 if not (search_about_n_terms_from_indices_end == -1 or n_terms_from_indices_begin == -1):
+                    search_about_n_terms_from_indices_end += 1
                     numeric_seq = numeric_seq[n_terms_from_indices_begin:search_about_n_terms_from_indices_end]
-                search_shift_with_constant(','.join(str(x) for x in numeric_seq), 2)
+                max_shift_constant = 2 if (-2 <= numeric_seq[0] <= 2) else numeric_seq[0]
+
+                search_shift_with_constant(','.join(str(x) for x in numeric_seq), max_shift_constant)
 
         else:
             print("[+] No matches for rank " + str(i))
@@ -283,7 +300,8 @@ if __name__ == "__main__":
             elif choice == '3':
                 echo_fuzzy_matching()
                 choice = input(_YOUR_CHOICE).strip()
-                allowed_drop = int(input(_NUMBER_OF_ALLOWED_DROP))
+                if not (choice.upper() == "IV" or choice == "4"):
+                    allowed_drop = int(input(_NUMBER_OF_ALLOWED_DROP))
 
                 if choice.upper() == "I" or choice == "1":
                     ret = search_engine.fuzzy_match_type1(seq_input, allowed_drop)
@@ -297,11 +315,20 @@ if __name__ == "__main__":
                     ret = search_engine.fuzzy_match_type3(seq_input, allowed_drop)
 
                 elif choice.upper() == "IV" or choice == "4":                       # Undocumented
-                    begin_indices = int(input("[+] Enter the first index for indices terms: "))
-                    end_indices = int(input("[+] Enter the end index for indices terms: "))
+                    begin_indices = input("[+] Enter the beginning of searching range for indices terms (Enter to skip): ")
+                    if begin_indices.strip() == "":
+                        begin_indices = -1
+                        end_indices = -1
+                    else:
+                        begin_indices = int(begin_indices)
+                        end_indices = input("[+] Enter the ending of searching range for indices terms: ")
+                        end_indices = int(end_indices)
 
-                    for i in range(-2, 3):
-                        numeric_seq = search_engine.convert_str_to_list(seq_input, True, False)
+                    begin_shifting_range = int(input("[+] Enter the beginning of shifting range for the input seq: "))
+                    end_shifting_range = int(input("[+] Enter the ending of shifting range for the input seq: "))
+
+                    numeric_seq = search_engine.convert_str_to_list(seq_input, True, False)
+                    for i in range(begin_shifting_range, end_shifting_range + 1):
                         string_seq_shifted = [x + i for x in numeric_seq]
                         string_seq_shifted = ','.join(str(x) for x in string_seq_shifted)
 
