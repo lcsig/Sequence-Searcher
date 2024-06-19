@@ -3,6 +3,7 @@ import importlib
 import signal
 import sys
 import urllib.request
+import readline
 
 import operation
 import search_engine
