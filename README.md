@@ -181,3 +181,8 @@ mm && almazari && 16 [.::at::.] cit [.::dot::.] just [.::dot::.] edu [.::dot::.]
 - [ ] Fix Formula Lookup Multiprocessing on Windows (Spawn Processes Problem)
 - [X] View Sequence
 - [X] Searching without Order - Dropping Terms.
+
+## Buy me a Coffee: 
+BTC: bc1q2kqvggm552h0csyr0awa2zepdapxdqnacw0z5w
+
+![BTC](https://raw.githubusercontent.com/lcsig/API-Hooking/refs/heads/master/img/btc.png)
